@@ -120,7 +120,7 @@ export default async function PortalDashboardPage() {
                           {booking.status}
                         </span>
                       </div>
-                      <h3 className="font-serif text-lg text-stone">{booking.serviceName}</h3>
+                      <h3 className="font-serif text-lg text-stone">{booking.service.name}</h3>
                       <p className="text-sm text-text-secondary">
                         {formatDate(booking.scheduledDate)} at {formatTime(booking.scheduledTime)}
                       </p>

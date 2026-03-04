@@ -220,27 +220,27 @@ Seasonal attention includes:
   // Create sample staff members
   const staffMembers = [
     {
-      name: 'Sarah M.',
+      name: 'Sarah',
+      fullName: 'Sarah Mitchell',
       email: 'sarah@everclean.internal',
       phone: '+1 (519) 555-0101',
       bio: 'Specialist in fine art and antique care with 8 years of experience in luxury hospitality.',
-      role: 'supervisor',
       isActive: true
     },
     {
-      name: 'Michael T.',
+      name: 'Michael',
+      fullName: 'Michael Thompson',
       email: 'michael@everclean.internal',
       phone: '+1 (519) 555-0102',
       bio: 'Expert in natural stone and hardwood maintenance. Background in hotel housekeeping management.',
-      role: 'cleaner',
       isActive: true
     },
     {
-      name: 'Jennifer K.',
+      name: 'Jennifer',
+      fullName: 'Jennifer Kim',
       email: 'jennifer@everclean.internal',
       phone: '+1 (519) 555-0103',
       bio: 'Detail-oriented specialist with certification in eco-friendly cleaning methods for sensitive environments.',
-      role: 'cleaner',
       isActive: true
     }
   ];

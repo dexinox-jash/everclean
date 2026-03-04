@@ -6,11 +6,12 @@
  */
 
 import { Resend } from "resend";
-import { Booking, ContactForm, Address } from "@prisma/client";
+import { Booking, ContactForm, Address, Service } from "@prisma/client";
 
-// Extended booking type with address
+// Extended booking type with address and service
 interface BookingWithAddress extends Booking {
   address?: Address | null;
+  service?: Service | null;
 }
 
 // Initialize Resend client
@@ -193,7 +194,7 @@ function generateBookingConfirmationHtml(booking: BookingWithAddress): string {
           
           <div class="detail-row">
             <span class="label">Service</span>
-            <span class="value">${booking.serviceName}</span>
+            <span class="value">${booking.service?.name || "N/A"}</span>
           </div>
           
           <div class="detail-row">
@@ -262,7 +263,7 @@ Booking Number: ${booking.bookingNumber}
 
 BOOKING DETAILS
 ---------------
-Service: ${booking.serviceName}
+Service: ${booking.service?.name || "N/A"}
 Date: ${new Date(booking.scheduledDate).toLocaleDateString("en-CA", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
 Time: ${booking.scheduledTime}
 Address: ${booking.address?.street || "N/A"}, ${booking.address?.city || "N/A"}
@@ -286,7 +287,7 @@ function generateAdminBookingHtml(booking: BookingWithAddress): string {
     <p><strong>Customer:</strong> ${booking.customerName}</p>
     <p><strong>Email:</strong> ${booking.customerEmail}</p>
     <p><strong>Phone:</strong> ${booking.customerPhone}</p>
-    <p><strong>Service:</strong> ${booking.serviceName}</p>
+    <p><strong>Service:</strong> ${booking.service?.name || "N/A"}</p>
     <p><strong>Date:</strong> ${new Date(booking.scheduledDate).toLocaleDateString()}</p>
     <p><strong>Time:</strong> ${booking.scheduledTime}</p>
     <p><strong>Address:</strong> ${booking.address?.street || "N/A"}, ${booking.address?.city || "N/A"}</p>

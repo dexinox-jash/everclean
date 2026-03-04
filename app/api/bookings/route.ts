@@ -93,7 +93,6 @@ export async function POST(request: NextRequest) {
       data: {
         bookingNumber,
         serviceId: data.serviceId,
-        serviceName: service.name,
         addressId: address.id,
         customerName: data.customerName,
         customerEmail: data.customerEmail,
@@ -107,6 +106,7 @@ export async function POST(request: NextRequest) {
         scheduledDate: new Date(data.scheduledDate),
         scheduledTime: data.scheduledTime,
         duration: Math.ceil(service.durationHours),
+        estimatedHours: service.durationHours,
         endTime,
         status: "PENDING",
         paymentStatus: "PENDING",

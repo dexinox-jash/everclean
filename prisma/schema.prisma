@@ -1,5 +1,5 @@
-// PRISMA SCHEMA - Everclean Luxury Services Platform
-// Complete implementation for HNWI concierge cleaning service
+// PRISMA SCHEMA - Everclean Luxury Services Platform v2.0
+// Complete implementation for luxury estate management with subscriptions, staff tracking, gift cards
 
 generator client {
   provider = "prisma-client-js"
@@ -43,18 +43,39 @@ enum PaymentStatus {
 
 enum NotificationType {
   BOOKING_CONFIRMED
-  PAYMENT_RECEIVED
-  REMINDER_24H
+  BOOKING_REMINDER_24H
+  BOOKING_REMINDER_1H
   STAFF_ARRIVING
-  COMPLETION_NOTICE
-  CANCELLATION
+  SERVICE_STARTED
+  SERVICE_COMPLETED
+  PAYMENT_RECEIVED
+  PAYMENT_FAILED
+  STAFF_ASSIGNED
+  SUBSCRIPTION_CREATED
+  SUBSCRIPTION_PAUSED
+  SUBSCRIPTION_CANCELLED
+  GIFT_CARD_PURCHASED
+  GIFT_CARD_REDEEMED
+  REVIEW_REQUESTED
 }
 
-enum ContactSubject {
-  consultation
-  quote
-  careers
-  general
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  CANCELLED
+  PAST_DUE
+}
+
+enum SubscriptionFrequency {
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+}
+
+enum ReferralStatus {
+  PENDING
+  COMPLETED
+  EXPIRED
 }
 
 // ============================================================================
@@ -109,7 +130,18 @@ model User {
   contactForms  ContactForm[]
   reviews       Review[]
   addresses     Address[]
-  preferences   UserPreference?
+  preferences   ClientPreferences?
+  subscriptions Subscription[]
+  
+  // Referral system
+  referralCode  String?   @unique @map("referral_code")
+  referredBy    String?   @map("referred_by")
+  referralsMade Referral[] @relation("Referrer")
+  referralsReceived Referral[] @relation("Referred")
+  
+  // Gift cards
+  giftCardsPurchased GiftCard[] @relation("Purchaser")
+  giftCardsRedeemed  GiftCard[] @relation("Redeemer")
 
   @@map("users")
 }
@@ -124,7 +156,7 @@ model VerificationToken {
 }
 
 // ============================================================================
-// ADDRESS MODEL (Separate for multi-property support)
+// ADDRESS MODEL
 // ============================================================================
 
 model Address {
@@ -136,11 +168,12 @@ model Address {
   province    String   @default("Ontario")
   country     String   @default("Canada")
   isPrimary   Boolean  @default(false) @map("is_primary")
-  accessNotes String?  @map("access_notes") // "Side gate code: 1234"
+  accessNotes String?  @map("access_notes")
   parkingInfo String?  @map("parking_info")
+  latitude    Float?
+  longitude   Float?
   createdAt   DateTime @default(now()) @map("created_at")
 
-  // Relations
   user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   bookings    Booking[]
 
@@ -154,112 +187,185 @@ model Address {
 model Service {
   id               String   @id @default(cuid())
   slug             String   @unique
-  name             String   // "Estate White-Glove Cleaning"
+  name             String
   shortDescription String   @map("short_description")
   fullDescription  String   @db.Text @map("full_description")
   basePrice        Decimal  @map("base_price") @db.Decimal(10, 2)
-  priceMultiplier  Json?    @map("price_multiplier") // {"studio": 1, "2bed": 1.5}
+  priceMultiplier  Json?    @map("price_multiplier")
   durationHours    Float    @map("duration_hours")
-  features         String[] // Array of inclusions
-  bestFor          String?  @map("best_for") // "Homes 4000+ sq ft with fine art"
+  features         String[]
+  bestFor          String?  @map("best_for")
   requiresConsult  Boolean  @default(false) @map("requires_consult")
   isActive         Boolean  @default(true) @map("is_active")
   isPopular        Boolean  @default(false) @map("is_popular")
   sortOrder        Int      @default(0) @map("sort_order")
-  icon             String   @default("Sparkles")
+  icon             String   @default("Crown")
+  imageUrl         String?  @map("image_url")
+  
+  subscriptionDiscountWeekly    Int @default(15) @map("sub_discount_weekly")
+  subscriptionDiscountBiweekly  Int @default(10) @map("sub_discount_biweekly")
+  subscriptionDiscountMonthly   Int @default(5) @map("sub_discount_monthly")
+  
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @updatedAt @map("updated_at")
 
-  // Relations
   bookings         Booking[]
+  subscriptions    Subscription[]
 
   @@map("services")
 }
 
 // ============================================================================
-// STAFF MODELS
+// ENHANCED STAFF MODEL v2.0
 // ============================================================================
 
 model Staff {
-  id          String    @id @default(cuid())
-  name        String
-  email       String    @unique
-  phone       String
-  bio         String?   // Short profile for client portal
-  photo       String?   // URL to professional headshot
-  role        String    @default("cleaner") // cleaner, supervisor, manager
-  isActive    Boolean   @default(true) @map("is_active")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  id                    String    @id @default(cuid())
+  name                  String
+  fullName              String    @map("full_name")
+  email                 String    @unique
+  phone                 String
+  photo                 String?
+  bio                   String?
+  certifications        String[]
+  performanceScore      Float     @default(5.0) @map("performance_score")
+  isActive              Boolean   @default(true) @map("is_active")
+  isBackgroundChecked   Boolean   @default(false) @map("is_background_checked")
+  backgroundCheckDate   DateTime? @map("background_check_date")
+  hireDate              DateTime  @default(now()) @map("hire_date")
+  emergencyContact      String?   @map("emergency_contact")
+  maxHoursPerWeek       Int       @default(40) @map("max_hours_per_week")
+  preferredAreas        String[]
+  
+  vehicleDescription    String?   @map("vehicle_description")
+  hasUniform            Boolean   @default(true) @map("has_uniform")
+  
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @updatedAt @map("updated_at")
 
-  // Relations
-  bookings    Booking[]
-  schedules   StaffSchedule[]
-
+  bookings              Booking[]
+  schedules             StaffSchedule[]
+  timeClocks            TimeClock[]
+  primaryReviews        Review[]  @relation("PrimaryStaff")
+  
   @@map("staff")
 }
 
-model StaffSchedule {
-  id        String    @id @default(cuid())
-  staffId   String    @map("staff_id")
-  date      DateTime
-  startTime String    @map("start_time") // "09:00"
-  endTime   String    @map("end_time")   // "17:00"
-  isBooked  Boolean   @default(false) @map("is_booked")
-  bookingId String?   @map("booking_id")
+model TimeClock {
+  id            String    @id @default(cuid())
+  staffId       String    @map("staff_id")
+  bookingId     String    @unique @map("booking_id")
+  
+  checkInAt     DateTime  @map("check_in_at")
+  checkInLat    Float?    @map("check_in_lat")
+  checkInLng    Float?    @map("check_in_lng")
+  checkInAddress String?  @map("check_in_address")
+  
+  checkOutAt    DateTime? @map("check_out_at")
+  checkOutLat   Float?    @map("check_out_lat")
+  checkOutLng   Float?    @map("check_out_lng")
+  checkOutAddress String? @map("check_out_address")
+  
+  durationMinutes Int?    @map("duration_minutes")
+  
+  checklistCompleted  Json?   @map("checklist_completed")
+  serviceNotes        String? @map("service_notes") @db.Text
+  conditionPhotos     String[] @map("condition_photos")
+  suppliesUsed        String[] @map("supplies_used")
+  
+  createdAt     DateTime  @default(now()) @map("created_at")
 
-  staff     Staff     @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  staff         Staff     @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  booking       Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@index([staffId, checkInAt])
+  @@index([bookingId])
+  @@map("time_clocks")
+}
+
+model StaffSchedule {
+  id          String    @id @default(cuid())
+  staffId     String    @map("staff_id")
+  date        DateTime
+  startTime   String    @map("start_time")
+  endTime     String    @map("end_time")
+  isBooked    Boolean   @default(false) @map("is_booked")
+  isBlocked   Boolean   @default(false) @map("is_blocked")
+  bookingId   String?   @map("booking_id")
+  notes       String?
+  
+  staff       Staff     @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  booking     Booking?  @relation(fields: [bookingId], references: [id])
 
   @@unique([staffId, date, startTime])
   @@index([date, isBooked])
+  @@index([staffId, date])
   @@map("staff_schedules")
 }
 
 // ============================================================================
-// BOOKING MODEL
+// ENHANCED BOOKING MODEL v2.0
 // ============================================================================
 
 model Booking {
   id                String        @id @default(cuid())
-  bookingNumber     String        @unique @map("booking_number") // EC-20241204-8F3A
+  bookingNumber     String        @unique @map("booking_number")
 
-  // Relations
   userId            String?       @map("user_id")
   user              User?         @relation(fields: [userId], references: [id])
   serviceId         String        @map("service_id")
-  serviceName       String        @map("service_name")
   service           Service       @relation(fields: [serviceId], references: [id])
   addressId         String        @map("address_id")
   address           Address       @relation(fields: [addressId], references: [id])
+  
   staffId           String?       @map("staff_id")
   staff             Staff?        @relation(fields: [staffId], references: [id])
-
-  // Customer Info (denormalized for non-registered bookings)
+  backupStaffId     String?       @map("backup_staff_id")
+  staffSubstituteApproved Boolean @default(false) @map("staff_substitute_approved")
+  teamSize          Int           @default(2) @map("team_size")
+  
   customerName      String        @map("customer_name")
   customerEmail     String        @map("customer_email")
   customerPhone     String        @map("customer_phone")
 
-  // Service Details
-  homeSize          String        @map("home_size") // "studio", "2bed", "estate"
-  calculatedPrice   Decimal       @map("calculated_price") @db.Decimal(10, 2)
-  specialRequests   String?       @map("special_requests") @db.Text
-  accessType        String        @default("present") @map("access_type") // "present", "key", "doorman"
+  homeSize          String        @map("home_size")
   hasPets           Boolean       @default(false) @map("has_pets")
   hasFineArt        Boolean       @default(false) @map("has_fine_art")
-
-  // Schedule
+  calculatedPrice   Decimal       @map("calculated_price") @db.Decimal(10, 2)
+  specialRequests   String?       @map("special_requests") @db.Text
+  accessType        String        @default("present") @map("access_type")
+  estimatedHours    Float         @map("estimated_hours")
+  suppliesIncluded  Boolean       @default(true) @map("supplies_included")
+  
+  clientNotes       String?       @map("client_notes") @db.Text
+  offLimitRooms     String[]      @map("off_limit_rooms")
+  
   scheduledDate     DateTime      @map("scheduled_date")
-  scheduledTime     String        @map("scheduled_time") // "09:00" in 24h format
-  duration          Int           @default(3) // Actual hours assigned
+  scheduledTime     String        @map("scheduled_time")
+  duration          Int           @default(3)
   endTime           String?       @map("end_time")
-
-  // Status & Payment
+  
   status            BookingStatus @default(PENDING)
   paymentStatus     PaymentStatus @default(PENDING) @map("payment_status")
   paymentIntentId   String?       @map("payment_intent_id")
   amountPaid        Decimal?      @map("amount_paid") @db.Decimal(10, 2)
-
-  // Timestamps
+  gratuityAmount    Decimal?      @map("gratuity_amount") @db.Decimal(10, 2)
+  
+  subscription      Subscription? @relation(fields: [subscriptionId], references: [id])
+  subscriptionId    String?       @unique @map("subscription_id")
+  
+  serviceSummary    String?       @map("service_summary") @db.Text
+  conditionPhotos   String[]      @map("condition_photos")
+  checklistCompleted Json?        @map("checklist_completed")
+  clientRating      Int?          @map("client_rating")
+  clientFeedback    String?       @map("client_feedback") @db.Text
+  
+  referralSource    String?       @map("referral_source")
+  utmCampaign       String?       @map("utm_campaign")
+  
+  smsOptIn          Boolean       @default(false) @map("sms_opt_in")
+  emailOptIn        Boolean       @default(true) @map("email_opt_in")
+  
   createdAt         DateTime      @default(now()) @map("created_at")
   updatedAt         DateTime      @updatedAt @map("updated_at")
   confirmedAt       DateTime?     @map("confirmed_at")
@@ -267,113 +373,126 @@ model Booking {
   cancelledAt       DateTime?     @map("cancelled_at")
   cancellationReason String?      @map("cancellation_reason")
 
-  // Relations
   history           BookingHistory[]
   notifications     Notification[]
   review            Review?
+  timeClock         TimeClock?
+  schedules         StaffSchedule[]
 
   @@index([scheduledDate])
   @@index([status])
   @@index([userId])
   @@index([customerEmail])
+  @@index([staffId])
+  @@index([subscriptionId])
   @@map("bookings")
 }
 
 model BookingHistory {
   id          String    @id @default(cuid())
   bookingId   String    @map("booking_id")
-  action      String    // "CREATED", "CONFIRMED", "STAFF_ASSIGNED"
-  actor       String    // "SYSTEM", "ADMIN:John", "USER"
-  details     Json?     // { "oldStatus": "PENDING", "newStatus": "CONFIRMED" }
+  action      String
+  actor       String
+  details     Json?
   createdAt   DateTime  @default(now()) @map("created_at")
 
   booking     Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
 
+  @@index([bookingId, createdAt])
   @@map("booking_history")
 }
 
 // ============================================================================
-// REVIEW MODEL
+// SUBSCRIPTION MODEL
 // ============================================================================
 
-model Review {
-  id          String   @id @default(cuid())
-  bookingId   String   @unique @map("booking_id")
-  booking     Booking  @relation(fields: [bookingId], references: [id])
-  userId      String   @map("user_id")
-  user        User     @relation(fields: [userId], references: [id])
+model Subscription {
+  id              String              @id @default(cuid())
+  userId          String              @map("user_id")
+  user            User                @relation(fields: [userId], references: [id])
+  
+  status          SubscriptionStatus  @default(ACTIVE)
+  frequency       SubscriptionFrequency
+  
+  serviceId       String              @map("service_id")
+  service         Service             @relation(fields: [serviceId], references: [id])
+  
+  basePrice       Decimal             @map("base_price") @db.Decimal(10, 2)
+  discountPercent Int                 @map("discount_percent")
+  finalPrice      Decimal             @map("final_price") @db.Decimal(10, 2)
+  
+  homeSize        String              @map("home_size")
+  addressId       String              @map("address_id")
+  
+  stripeSubscriptionId String        @unique @map("stripe_subscription_id")
+  stripeCustomerId     String        @map("stripe_customer_id")
+  
+  preferredDay    String              @map("preferred_day")
+  preferredTime   String              @map("preferred_time")
+  
+  nextBookingDate DateTime            @map("next_booking_date")
+  lastBookingDate DateTime?           @map("last_booking_date")
+  
+  pausedUntil     DateTime?           @map("paused_until")
+  pauseReason     String?             @map("pause_reason")
+  
+  cancelledAt     DateTime?           @map("cancelled_at")
+  cancelReason    String?             @map("cancel_reason")
+  
+  createdAt       DateTime            @default(now()) @map("created_at")
+  updatedAt       DateTime            @updatedAt @map("updated_at")
 
-  rating      Int      // 1-5
-  comment     String?  @db.Text
-  isPublic    Boolean  @default(false) @map("is_public")
-  isVerified  Boolean  @default(true) @map("is_verified")
-  adminReply  String?  @map("admin_reply") @db.Text
+  bookings        Booking[]
 
-  createdAt   DateTime @default(now()) @map("created_at")
-
-  @@index([isPublic, createdAt])
-  @@map("reviews")
+  @@index([userId, status])
+  @@index([nextBookingDate])
+  @@map("subscriptions")
 }
 
 // ============================================================================
-// NOTIFICATION MODEL
+// CLIENT PREFERENCES
 // ============================================================================
 
-model Notification {
-  id          String           @id @default(cuid())
-  bookingId   String           @map("booking_id")
-  type        NotificationType
-  recipient   String           // Email or phone
-  content     String           // Rendered message
-  isSent      Boolean          @default(false) @map("is_sent")
-  sentAt      DateTime?        @map("sent_at")
-  error       String?          // If failed
+model ClientPreferences {
+  id                    String   @id @default(cuid())
+  userId                String   @unique @map("user_id")
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  preferredProducts     String[] @map("preferred_products")
+  allergies             String[]
+  offLimitAreas         String[] @map("off_limit_areas")
+  specialInstructions   String?  @map("special_instructions") @db.Text
+  
+  entryMethod           String   @map("entry_method")
+  lockboxCode           String?  @map("lockbox_code")
+  smartLockInstructions String?  @map("smart_lock_instructions") @db.Text
+  alarmCode             String?  @map("alarm_code")
+  alarmInstructions     String?  @map("alarm_instructions") @db.Text
+  parkingInstructions   String?  @map("parking_instructions") @db.Text
+  
+  hasPets               Boolean  @default(false) @map("has_pets")
+  petDetails            String?  @map("pet_details") @db.Text
+  
+  preferredTeamSize     Int      @default(2) @map("preferred_team_size")
+  preferredStaffGender  String?  @map("preferred_staff_gender")
+  musicPreference       String?  @map("music_preference")
+  noiseLevel            String?  @map("noise_level")
+  
+  preferredDays         String[] @map("preferred_days")
+  preferredTimes        String[] @map("preferred_times")
+  avoidTimes            String[] @map("avoid_times")
+  
+  billingAddressId      String?  @map("billing_address_id")
+  paymentMethodId       String?  @map("payment_method_id")
+  
+  smsEnabled            Boolean  @default(false) @map("sms_enabled")
+  emailEnabled          Boolean  @default(true) @map("email_enabled")
+  marketingEmails       Boolean  @default(false) @map("marketing_emails")
+  
+  createdAt             DateTime @default(now()) @map("created_at")
+  updatedAt             DateTime @updatedAt @map("updated_at")
 
-  booking     Booking          @relation(fields: [bookingId], references: [id], onDelete: Cascade)
-
-  @@index([recipient])
-  @@index([isSent])
-  @@map("notifications")
-}
-
-// ============================================================================
-// CONTACT FORM MODEL
-// ============================================================================
-
-model ContactForm {
-  id          String   @id @default(cuid())
-  name        String
-  email       String
-  phone       String?
-  subject     String   // "consultation", "quote", "careers", "general"
-  message     String   @db.Text
-  userId      String?  @map("user_id")
-  user        User?    @relation(fields: [userId], references: [id])
-  status      String   @default("NEW") // NEW, IN_PROGRESS, RESOLVED
-  adminNotes  String?  @map("admin_notes") @db.Text
-  createdAt   DateTime @default(now()) @map("created_at")
-  resolvedAt  DateTime? @map("resolved_at")
-
-  @@index([email])
-  @@index([status])
-  @@map("contact_forms")
-}
-
-// ============================================================================
-// USER PREFERENCES MODEL
-// ============================================================================
-
-model UserPreference {
-  id                  String   @id @default(cuid())
-  userId              String   @unique @map("user_id")
-  preferredContact    String   @default("email") @map("preferred_contact") // "email", "sms", "call"
-  notesForStaff       String?  @map("notes_for_staff") @db.Text
-  entryInstructions   String?  @map("entry_instructions")
-  marketingConsent    Boolean  @default(false) @map("marketing_consent")
-
-  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("user_preferences")
+  @@map("client_preferences")
 }
 
 // ============================================================================
@@ -381,25 +500,179 @@ model UserPreference {
 // ============================================================================
 
 model GiftCard {
-  id             String    @id @default(cuid())
-  code           String    @unique // EC-GIFT-XXXX-XXXX
-  amount         Decimal   @db.Decimal(10, 2)
-  purchaserName  String    @map("purchaser_name")
-  purchaserEmail String    @map("purchaser_email")
-  recipientName  String?   @map("recipient_name")
-  recipientEmail String?   @map("recipient_email")
-  message        String?
-  isRedeemed     Boolean   @default(false) @map("is_redeemed")
-  redeemedAt     DateTime? @map("redeemed_at")
-  redeemedBy     String?   @map("redeemed_by") // User ID
-  expiresAt      DateTime? @map("expires_at")
-  createdAt      DateTime  @default(now()) @map("created_at")
+  id                String    @id @default(cuid())
+  code              String    @unique
+  
+  amount            Decimal   @db.Decimal(10, 2)
+  
+  purchaserName     String    @map("purchaser_name")
+  purchaserEmail    String    @map("purchaser_email")
+  purchaserUserId   String?   @map("purchaser_user_id")
+  purchaser         User?     @relation("Purchaser", fields: [purchaserUserId], references: [id])
+  
+  recipientName     String    @map("recipient_name")
+  recipientEmail    String    @map("recipient_email")
+  recipientPhone    String?   @map("recipient_phone")
+  message           String?
+  
+  isPhysicalCard    Boolean   @default(false) @map("is_physical_card")
+  shippingAddress   Json?     @map("shipping_address")
+  shippingStatus    String?   @map("shipping_status")
+  trackingNumber    String?   @map("tracking_number")
+  
+  isRedeemed        Boolean   @default(false) @map("is_redeemed")
+  redeemedAt        DateTime? @map("redeemed_at")
+  redeemedByUserId  String?   @map("redeemed_by_user_id")
+  redeemedBy        User?     @relation("Redeemer", fields: [redeemedByUserId], references: [id])
+  
+  stripePaymentIntentId String? @map("stripe_payment_intent_id")
+  
+  expiresAt         DateTime  @map("expires_at")
+  
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
 
+  @@index([recipientEmail])
+  @@index([isRedeemed, expiresAt])
   @@map("gift_cards")
 }
 
 // ============================================================================
-// SITE CONFIG MODEL
+// ENHANCED REVIEW MODEL
+// ============================================================================
+
+model Review {
+  id              String   @id @default(cuid())
+  bookingId       String   @unique @map("booking_id")
+  booking         Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  
+  userId          String   @map("user_id")
+  user            User     @relation(fields: [userId], references: [id])
+  
+  overallRating   Int      @map("overall_rating")
+  punctualityRating Int?   @map("punctuality_rating")
+  qualityRating   Int?     @map("quality_rating")
+  professionalismRating Int? @map("professionalism_rating")
+  
+  comment         String?  @db.Text
+  
+  primaryStaffId  String?  @map("primary_staff_id")
+  primaryStaff    Staff?   @relation("PrimaryStaff", fields: [primaryStaffId], references: [id])
+  
+  isPublic        Boolean  @default(false) @map("is_public")
+  isVerified      Boolean  @default(true) @map("is_verified")
+  featuredOnHomepage Boolean @default(false) @map("featured_on_homepage")
+  
+  adminNotes      String?  @map("admin_notes") @db.Text
+  flaggedForReview Boolean @default(false) @map("flagged_for_review")
+  
+  respondedAt     DateTime? @map("responded_at")
+  responseText    String?   @map("response_text") @db.Text
+  respondedBy     String?   @map("responded_by")
+  
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  @@index([userId, createdAt])
+  @@index([isPublic, createdAt])
+  @@index([primaryStaffId])
+  @@map("reviews")
+}
+
+// ============================================================================
+// REFERRAL SYSTEM
+// ============================================================================
+
+model Referral {
+  id              String         @id @default(cuid())
+  
+  referrerId      String         @map("referrer_id")
+  referrer        User           @relation("Referrer", fields: [referrerId], references: [id])
+  
+  referredId      String         @unique @map("referred_id")
+  referred        User           @relation("Referred", fields: [referredId], references: [id])
+  
+  rewardAmount    Decimal        @map("reward_amount") @db.Decimal(10, 2)
+  rewardStatus    ReferralStatus @default(PENDING) @map("reward_status")
+  
+  referralCode    String         @map("referral_code")
+  firstBookingId  String?        @map("first_booking_id")
+  firstBookingDate DateTime?     @map("first_booking_date")
+  
+  stripeCreditId  String?        @map("stripe_credit_id")
+  
+  createdAt       DateTime       @default(now()) @map("created_at")
+  completedAt     DateTime?      @map("completed_at")
+
+  @@index([referrerId])
+  @@index([referralCode])
+  @@map("referrals")
+}
+
+// ============================================================================
+// NOTIFICATION SYSTEM
+// ============================================================================
+
+model Notification {
+  id          String           @id @default(cuid())
+  bookingId   String           @map("booking_id")
+  booking     Booking          @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  
+  type        NotificationType
+  channel     String
+  recipient   String
+  
+  content     String
+  subject     String?
+  
+  isSent      Boolean          @default(false) @map("is_sent")
+  sentAt      DateTime?        @map("sent_at")
+  deliveredAt DateTime?        @map("delivered_at")
+  openedAt    DateTime?        @map("opened_at")
+  
+  error       String?
+  retryCount  Int              @default(0) @map("retry_count")
+  
+  createdAt   DateTime         @default(now()) @map("created_at")
+
+  @@index([bookingId])
+  @@index([isSent, createdAt])
+  @@index([recipient, createdAt])
+  @@map("notifications")
+}
+
+// ============================================================================
+// CONTACT FORM
+// ============================================================================
+
+model ContactForm {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  subject     String
+  message     String   @db.Text
+  userId      String?  @map("user_id")
+  user        User?    @relation(fields: [userId], references: [id])
+  
+  status      String   @default("NEW")
+  priority    String   @default("normal")
+  
+  assignedTo  String?  @map("assigned_to")
+  
+  adminNotes  String?  @map("admin_notes") @db.Text
+  
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  resolvedAt  DateTime? @map("resolved_at")
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+  @@map("contact_forms")
+}
+
+// ============================================================================
+// SITE CONFIG
 // ============================================================================
 
 model SiteConfig {
@@ -407,6 +680,7 @@ model SiteConfig {
   key         String   @unique
   value       String   @db.Text
   description String?
+  isPublic    Boolean  @default(false) @map("is_public")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   @@map("site_config")

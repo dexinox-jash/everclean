@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
     // Get booking from database
     const booking = await db.booking.findUnique({
       where: { id: bookingId },
+      include: { service: true },
     });
 
     if (!booking) {
@@ -66,10 +67,10 @@ export async function POST(request: NextRequest) {
           bookingId: booking.id,
           bookingNumber: booking.bookingNumber,
           customerEmail: booking.customerEmail,
-          serviceName: booking.serviceName,
+          serviceName: booking.service.name,
         },
         receipt_email: booking.customerEmail,
-        description: `Everclean - ${booking.serviceName} (${booking.bookingNumber})`,
+        description: `Everclean - ${booking.service.name} (${booking.bookingNumber})`,
       });
 
       // Save payment intent ID to booking
