@@ -123,7 +123,7 @@ export default async function ServicesPage() {
             <GoldLineReveal className="mb-6" />
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
-            <p className="text-lg text-[var(--color-ivory)]/70 max-w-2xl leading-relaxed">
+            <p className="text-lg text-light-tertiary max-w-2xl leading-relaxed">
               Each service is meticulously designed for residences that demand the highest standards. 
               From intimate homes to grand estates, we deliver excellence with discretion.
             </p>
@@ -160,7 +160,7 @@ export default async function ServicesPage() {
                       <div className="w-12 h-12 bg-gold-500/10 flex items-center justify-center">
                         <Icon className="w-6 h-6 text-gold-500" />
                       </div>
-                      <span className="text-sm text-stone-muted uppercase tracking-wider">
+                      <span className="text-sm text-text-muted uppercase tracking-wider">
                         {service.durationHours} hours estimated
                       </span>
                     </div>
@@ -169,12 +169,12 @@ export default async function ServicesPage() {
                       {service.name}
                     </h2>
                     
-                    <p className="text-stone-light leading-relaxed mb-6">
+                    <p className="text-text-secondary leading-relaxed mb-6">
                       {service.fullDescription}
                     </p>
 
                     {service.bestFor && (
-                      <p className="text-sm text-stone-muted uppercase tracking-wider mb-6">
+                      <p className="text-sm text-text-muted uppercase tracking-wider mb-6">
                         Best for: {service.bestFor}
                       </p>
                     )}
@@ -196,7 +196,7 @@ export default async function ServicesPage() {
                       <span className="font-serif text-3xl text-navy-700">
                         From ${Number(service.basePrice).toLocaleString()}
                       </span>
-                      <span className="text-stone-light">per service</span>
+                      <span className="text-text-secondary">per service</span>
                     </div>
 
                     {/* Multipliers */}
@@ -206,7 +206,7 @@ export default async function ServicesPage() {
                         <div className="grid grid-cols-3 gap-2 text-sm">
                           {Object.entries(multiplier).map(([size, mult]) => (
                             <div key={size} className="flex justify-between">
-                              <span className="text-stone-light capitalize">{size}:</span>
+                              <span className="text-text-secondary capitalize">{size}:</span>
                               <span className="text-navy-700 font-medium">
                                 ${Math.round(Number(service.basePrice) * mult).toLocaleString()}
                               </span>
@@ -231,7 +231,7 @@ export default async function ServicesPage() {
                     <div className="aspect-[4/3] bg-cream flex items-center justify-center">
                       <div className="text-center p-8">
                         <Icon className="w-20 h-20 text-gold-500/30 mx-auto mb-4" />
-                        <p className="text-stone-muted text-sm">Service Photography</p>
+                        <p className="text-text-muted text-sm">Service Photography</p>
                       </div>
                     </div>
                   </div>
@@ -280,7 +280,7 @@ export default async function ServicesPage() {
                 <StaggerItem key={index}>
                   <div className="bg-[var(--color-pure)] p-8">
                     <h3 className="font-serif text-xl text-stone mb-3">{faq.q}</h3>
-                    <p className="text-stone-light leading-relaxed">{faq.a}</p>
+                    <p className="text-text-secondary leading-relaxed">{faq.a}</p>
                   </div>
                 </StaggerItem>
               ))}

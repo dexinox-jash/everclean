@@ -43,7 +43,7 @@ export function TrustSection() {
           </AnimatedSection>
           
           <AnimatedSection delay={0.2}>
-            <p className="text-[var(--color-ivory)]/70 leading-relaxed">
+            <p className="text-light-tertiary leading-relaxed">
               We understand that inviting someone into your home requires trust. 
               Our comprehensive protections ensure your complete confidence.
             </p>
@@ -59,7 +59,7 @@ export function TrustSection() {
                   <feature.icon className="w-8 h-8 text-gold-500" />
                 </div>
                 <h3 className="font-serif text-xl mb-3">{feature.title}</h3>
-                <p className="text-sm text-[var(--color-ivory)]/60 leading-relaxed">
+                <p className="text-sm text-light-secondary leading-relaxed">
                   {feature.description}
                 </p>
               </div>
@@ -73,17 +73,17 @@ export function TrustSection() {
             <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
               <div className="text-center">
                 <p className="font-serif text-3xl text-gold-500 mb-1">WSIB</p>
-                <p className="text-xs uppercase tracking-wider text-[var(--color-ivory)]/50">Registered</p>
+                <p className="text-xs uppercase tracking-wider text-light-muted">Registered</p>
               </div>
               <div className="hidden md:block w-px h-12 bg-[var(--color-ivory)]/20" />
               <div className="text-center">
                 <p className="font-serif text-3xl text-gold-500 mb-1">Bonded</p>
-                <p className="text-xs uppercase tracking-wider text-[var(--color-ivory)]/50">Employees</p>
+                <p className="text-xs uppercase tracking-wider text-light-muted">Employees</p>
               </div>
               <div className="hidden md:block w-px h-12 bg-[var(--color-ivory)]/20" />
               <div className="text-center">
                 <p className="font-serif text-3xl text-gold-500 mb-1">24/7</p>
-                <p className="text-xs uppercase tracking-wider text-[var(--color-ivory)]/50">Support</p>
+                <p className="text-xs uppercase tracking-wider text-light-muted">Support</p>
               </div>
             </div>
           </div>

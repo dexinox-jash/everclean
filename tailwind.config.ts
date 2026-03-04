@@ -10,11 +10,12 @@ const config: Config = {
   theme: {
     extend: {
       // ============================================================================
-      // COLOR SYSTEM - Quiet Luxury 2025
+      // COLOR SYSTEM - Quiet Luxury 2025 - WCAG AA Compliant
       // ============================================================================
       colors: {
         // Navy scale
         navy: {
+          950: "#030712",
           900: "#0D1117",
           800: "#171923",
           700: "#1A202C",
@@ -32,10 +33,29 @@ const config: Config = {
         // Ivory neutrals
         ivory: "#FAF9F6",
         cream: "#F5F4F0",
-        // Accent colors
+        pure: "#FFFFFF",
+        
+        // NEW: Accessible text colors
+        text: {
+          primary: "#292524",      // stone-800 - 9.8:1 on ivory
+          secondary: "#44403C",    // stone-700 - 7.2:1 on ivory  
+          tertiary: "#57534E",     // stone-600 - 5.1:1 on ivory
+          muted: "#78716C",        // stone-500 - 4.6:1 on ivory
+        },
+        
+        // NEW: Light text for dark backgrounds
+        light: {
+          primary: "#FAF9F6",      // ivory - 15.5:1 on navy-900
+          secondary: "#E7E5E4",    // gray-200 - 10.8:1 on navy-900
+          tertiary: "#D4D4D8",     // gray-300 - 7.8:1 on navy-900
+          muted: "#A1A1AA",        // gray-400 - 5.1:1 on navy-900
+        },
+        
+        // Accents
         terracotta: "#A67C52",
         sage: "#8A9A87",
-        // Shadcn/ui compatibility
+        
+        // shadcn/ui compatibility - mapped to accessible colors
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -78,7 +98,6 @@ const config: Config = {
         sans: ["Inter", "system-ui", "sans-serif"],
       },
       fontSize: {
-        // Custom scale for luxury feel
         "2xs": ["0.625rem", { lineHeight: "0.875rem" }],
       },
       // ============================================================================

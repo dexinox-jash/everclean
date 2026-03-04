@@ -42,7 +42,7 @@ export default async function PortalDashboardPage() {
           <h1 className="font-serif text-3xl md:text-4xl text-stone mb-2">
             Welcome, {session.user.name?.split(" ")[0] || "Client"}
           </h1>
-          <p className="text-stone-light">Manage your bookings and account settings</p>
+          <p className="text-text-secondary">Manage your bookings and account settings</p>
         </div>
 
         {/* Quick Actions */}
@@ -55,7 +55,7 @@ export default async function PortalDashboardPage() {
             <h3 className="font-serif text-lg text-stone mb-1 group-hover:text-gold-600 transition-colors">
               Book a Service
             </h3>
-            <p className="text-sm text-stone-light">Schedule a new cleaning</p>
+            <p className="text-sm text-text-secondary">Schedule a new cleaning</p>
           </Link>
 
           <Link
@@ -66,7 +66,7 @@ export default async function PortalDashboardPage() {
             <h3 className="font-serif text-lg text-stone mb-1 group-hover:text-gold-600 transition-colors">
               Profile Settings
             </h3>
-            <p className="text-sm text-stone-light">Update your preferences</p>
+            <p className="text-sm text-text-secondary">Update your preferences</p>
           </Link>
 
           <Link
@@ -77,7 +77,7 @@ export default async function PortalDashboardPage() {
             <h3 className="font-serif text-lg text-stone mb-1 group-hover:text-gold-600 transition-colors">
               My Addresses
             </h3>
-            <p className="text-sm text-stone-light">Manage your properties</p>
+            <p className="text-sm text-text-secondary">Manage your properties</p>
           </Link>
         </div>
 
@@ -96,7 +96,7 @@ export default async function PortalDashboardPage() {
 
           {bookings.length === 0 ? (
             <div className="p-12 text-center">
-              <Calendar className="w-12 h-12 text-stone-muted mx-auto mb-4" />
+              <Calendar className="w-12 h-12 text-text-muted mx-auto mb-4" />
               <p className="text-stone mb-4">No bookings yet</p>
               <Link href="/booking" className="btn-secondary">
                 Book Your First Service
@@ -113,7 +113,7 @@ export default async function PortalDashboardPage() {
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                       <div className="flex items-center gap-3 mb-2">
-                        <span className="text-xs uppercase tracking-wider text-stone-muted">
+                        <span className="text-xs uppercase tracking-wider text-text-muted">
                           {booking.bookingNumber}
                         </span>
                         <span className={`px-2 py-1 text-xs uppercase tracking-wider ${getStatusBadge(booking.status)}`}>
@@ -121,7 +121,7 @@ export default async function PortalDashboardPage() {
                         </span>
                       </div>
                       <h3 className="font-serif text-lg text-stone">{booking.serviceName}</h3>
-                      <p className="text-sm text-stone-light">
+                      <p className="text-sm text-text-secondary">
                         {formatDate(booking.scheduledDate)} at {formatTime(booking.scheduledTime)}
                       </p>
                     </div>
@@ -130,11 +130,11 @@ export default async function PortalDashboardPage() {
                         <p className="font-serif text-lg text-navy-700">
                           {formatCurrency(Number(booking.calculatedPrice))}
                         </p>
-                        <p className="text-xs text-stone-muted uppercase tracking-wider">
+                        <p className="text-xs text-text-muted uppercase tracking-wider">
                           {booking.paymentStatus}
                         </p>
                       </div>
-                      <ChevronRight className="w-5 h-5 text-stone-muted" />
+                      <ChevronRight className="w-5 h-5 text-text-muted" />
                     </div>
                   </div>
                 </Link>

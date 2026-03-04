@@ -120,8 +120,8 @@ function Step1Service({
 }) {
   return (
     <div className="space-y-6">
-      <h2 className="font-serif text-2xl text-stone mb-2">Select Your Service</h2>
-      <p className="text-stone-light mb-8">Choose the service that best fits your needs.</p>
+      <h2 className="font-serif text-2xl text-text-secondary mb-2">Select Your Service</h2>
+      <p className="text-text-secondary mb-8">Choose the service that best fits your needs.</p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {services.map((service) => {
@@ -138,10 +138,10 @@ function Step1Service({
                   : "border-[var(--color-border)] hover:border-gold-500/50 bg-[var(--color-pure)]"
               }`}
             >
-              <Icon className={`w-10 h-10 mb-4 ${isSelected ? "text-gold-500" : "text-navy-700/40"}`} />
-              <h3 className="font-serif text-lg text-stone mb-2">{service.name}</h3>
-              <p className="text-sm text-stone-light mb-4">{service.shortDescription}</p>
-              <p className="text-navy-700 font-medium">From ${service.basePrice}</p>
+              <Icon className={`w-10 h-10 mb-4 ${isSelected ? "text-gold-500" : "text-text-primary/40"}`} />
+              <h3 className="font-serif text-lg text-text-secondary mb-2">{service.name}</h3>
+              <p className="text-sm text-text-secondary mb-4">{service.shortDescription}</p>
+              <p className="text-text-primary font-medium">From ${service.basePrice}</p>
               
               {isSelected && (
                 <div className="absolute top-4 right-4 w-6 h-6 bg-gold-500 flex items-center justify-center">
@@ -189,13 +189,13 @@ function Step2HomeProfile({
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="font-serif text-2xl text-stone mb-2">Home Profile</h2>
-        <p className="text-stone-light">Tell us about your residence so we can prepare appropriately.</p>
+        <h2 className="font-serif text-2xl text-text-secondary mb-2">Home Profile</h2>
+        <p className="text-text-secondary">Tell us about your residence so we can prepare appropriately.</p>
       </div>
 
       {/* Home Size */}
       <div>
-        <label className="block text-sm font-medium text-stone mb-4">Home Size</label>
+        <label className="block text-sm font-medium text-text-secondary mb-4">Home Size</label>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {homeSizes.map((size) => (
             <button
@@ -208,7 +208,7 @@ function Step2HomeProfile({
               }`}
             >
               <Home className="w-5 h-5 text-gold-500 mb-2" />
-              <p className="font-medium text-stone text-sm">{size.label}</p>
+              <p className="font-medium text-text-secondary text-sm">{size.label}</p>
             </button>
           ))}
         </div>
@@ -216,7 +216,7 @@ function Step2HomeProfile({
 
       {/* Special Requirements */}
       <div className="space-y-4">
-        <label className="block text-sm font-medium text-stone">Special Requirements</label>
+        <label className="block text-sm font-medium text-text-secondary">Special Requirements</label>
         
         <label className="flex items-center gap-3 p-4 border border-[var(--color-border)] cursor-pointer hover:border-gold-500/50 transition-colors">
           <input
@@ -226,8 +226,8 @@ function Step2HomeProfile({
             className="w-5 h-5 accent-gold-500"
           />
           <div>
-            <p className="font-medium text-stone">Pets on premises</p>
-            <p className="text-sm text-stone-light">Affects timing and product selection</p>
+            <p className="font-medium text-text-secondary">Pets on premises</p>
+            <p className="text-sm text-text-secondary">Affects timing and product selection</p>
           </div>
         </label>
 
@@ -239,8 +239,8 @@ function Step2HomeProfile({
             className="w-5 h-5 accent-gold-500"
           />
           <div>
-            <p className="font-medium text-stone">Fine art or antiques requiring special care</p>
-            <p className="text-sm text-stone-light">Our specialists will handle these items</p>
+            <p className="font-medium text-text-secondary">Fine art or antiques requiring special care</p>
+            <p className="text-sm text-text-secondary">Our specialists will handle these items</p>
           </div>
         </label>
       </div>
@@ -248,9 +248,9 @@ function Step2HomeProfile({
       {/* Price Estimate */}
       {calculatePrice() && (
         <div className="p-6 bg-cream">
-          <p className="text-sm text-stone-muted mb-1">Estimated Price</p>
-          <p className="font-serif text-3xl text-navy-700">${calculatePrice()?.toLocaleString()}</p>
-          <p className="text-sm text-stone-light mt-2">Final price confirmed after booking details</p>
+          <p className="text-sm text-text-muted mb-1">Estimated Price</p>
+          <p className="font-serif text-3xl text-text-primary">${calculatePrice()?.toLocaleString()}</p>
+          <p className="text-sm text-text-secondary mt-2">Final price confirmed after booking details</p>
         </div>
       )}
     </div>
@@ -290,13 +290,13 @@ function Step3Schedule({
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="font-serif text-2xl text-stone mb-2">Select Date & Time</h2>
-        <p className="text-stone-light">Choose when you&apos;d like our team to arrive.</p>
+        <h2 className="font-serif text-2xl text-text-secondary mb-2">Select Date & Time</h2>
+        <p className="text-text-secondary">Choose when you&apos;d like our team to arrive.</p>
       </div>
 
       {/* Date Selection */}
       <div>
-        <label className="block text-sm font-medium text-stone mb-4">Date</label>
+        <label className="block text-sm font-medium text-text-secondary mb-4">Date</label>
         <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
           {availableDates.map((date) => {
             const dateObj = new Date(date);
@@ -332,7 +332,7 @@ function Step3Schedule({
           animate={{ opacity: 1, y: 0 }}
           className="space-y-4"
         >
-          <label className="block text-sm font-medium text-stone">Time</label>
+          <label className="block text-sm font-medium text-text-secondary">Time</label>
           <div className="grid grid-cols-4 gap-3">
             {timeSlots.map((time) => {
               const [hours, minutes] = time.split(":");
@@ -351,7 +351,7 @@ function Step3Schedule({
                   }`}
                 >
                   <Clock className="w-4 h-4 mx-auto mb-1 text-gold-500" />
-                  <p className="text-sm font-medium text-stone">
+                  <p className="text-sm font-medium text-text-secondary">
                     {displayHour}:{minutes} {period}
                   </p>
                 </button>
@@ -366,8 +366,8 @@ function Step3Schedule({
         <div className="p-4 bg-cream flex items-center gap-4">
           <Clock className="w-5 h-5 text-gold-500" />
           <div>
-            <p className="text-sm font-medium text-stone">Estimated Duration</p>
-            <p className="text-sm text-stone-light">{selectedService.durationHours} hours</p>
+            <p className="text-sm font-medium text-text-secondary">Estimated Duration</p>
+            <p className="text-sm text-text-secondary">{selectedService.durationHours} hours</p>
           </div>
         </div>
       )}
@@ -404,14 +404,14 @@ function Step4Contact({ data, onUpdate }: { data: BookingData["step4"]; onUpdate
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="font-serif text-2xl text-stone mb-2">Contact & Access</h2>
-        <p className="text-stone-light">How can we reach you and access your home?</p>
+        <h2 className="font-serif text-2xl text-text-secondary mb-2">Contact & Access</h2>
+        <p className="text-text-secondary">How can we reach you and access your home?</p>
       </div>
 
       {/* Contact Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-stone mb-2">Full Name *</label>
+          <label className="block text-sm font-medium text-text-secondary mb-2">Full Name *</label>
           <input
             type="text"
             value={localData.customerName}
@@ -421,7 +421,7 @@ function Step4Contact({ data, onUpdate }: { data: BookingData["step4"]; onUpdate
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-stone mb-2">Phone *</label>
+          <label className="block text-sm font-medium text-text-secondary mb-2">Phone *</label>
           <input
             type="tel"
             value={localData.customerPhone}
@@ -431,7 +431,7 @@ function Step4Contact({ data, onUpdate }: { data: BookingData["step4"]; onUpdate
           />
         </div>
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-stone mb-2">Email *</label>
+          <label className="block text-sm font-medium text-text-secondary mb-2">Email *</label>
           <input
             type="email"
             value={localData.customerEmail}
@@ -444,7 +444,7 @@ function Step4Contact({ data, onUpdate }: { data: BookingData["step4"]; onUpdate
 
       {/* Address */}
       <div className="space-y-4">
-        <label className="block text-sm font-medium text-stone flex items-center gap-2">
+        <label className="block text-sm font-medium text-text-secondary flex items-center gap-2">
           <MapPin className="w-4 h-4 text-gold-500" />
           Service Address
         </label>
@@ -475,7 +475,7 @@ function Step4Contact({ data, onUpdate }: { data: BookingData["step4"]; onUpdate
 
       {/* Access Type */}
       <div className="space-y-4">
-        <label className="block text-sm font-medium text-stone">Access Method</label>
+        <label className="block text-sm font-medium text-text-secondary">Access Method</label>
         {accessTypes.map((type) => (
           <label
             key={type.value}
@@ -494,8 +494,8 @@ function Step4Contact({ data, onUpdate }: { data: BookingData["step4"]; onUpdate
               className="mt-1 w-4 h-4 accent-gold-500"
             />
             <div>
-              <p className="font-medium text-stone">{type.label}</p>
-              <p className="text-sm text-stone-light">{type.description}</p>
+              <p className="font-medium text-text-secondary">{type.label}</p>
+              <p className="text-sm text-text-secondary">{type.description}</p>
             </div>
           </label>
         ))}
@@ -503,7 +503,7 @@ function Step4Contact({ data, onUpdate }: { data: BookingData["step4"]; onUpdate
 
       {/* Special Requests */}
       <div>
-        <label className="block text-sm font-medium text-stone mb-2">Special Requests</label>
+        <label className="block text-sm font-medium text-text-secondary mb-2">Special Requests</label>
         <textarea
           value={localData.specialRequests}
           onChange={(e) => updateField("specialRequests", e.target.value)}
@@ -521,7 +521,7 @@ function Step4Contact({ data, onUpdate }: { data: BookingData["step4"]; onUpdate
           onChange={(e) => updateField("gdprConsent", e.target.checked)}
           className="mt-0.5 w-5 h-5 accent-gold-500"
         />
-        <p className="text-sm text-stone">
+        <p className="text-sm text-text-secondary">
           I consent to Everclean processing my personal data for booking and service delivery. 
           View our <a href="/privacy" target="_blank" className="text-gold-600 hover:underline">Privacy Policy</a>.
         </p>
@@ -580,60 +580,60 @@ function Step5Payment({
   };
 
   if (!service || !bookingData.step2 || !bookingData.step3 || !bookingData.step4) {
-    return <div className="text-stone-light">Please complete all previous steps</div>;
+    return <div className="text-text-secondary">Please complete all previous steps</div>;
   }
 
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="font-serif text-2xl text-stone mb-2">Review & Confirm</h2>
-        <p className="text-stone-light">Please review your booking details before confirming.</p>
+        <h2 className="font-serif text-2xl text-text-secondary mb-2">Review & Confirm</h2>
+        <p className="text-text-secondary">Please review your booking details before confirming.</p>
       </div>
 
       {/* Summary Card */}
       <div className="bg-cream p-6 md:p-8 space-y-6">
-        <h3 className="font-serif text-xl text-stone">Booking Summary</h3>
+        <h3 className="font-serif text-xl text-text-secondary">Booking Summary</h3>
         
         <div className="space-y-4 text-sm">
           <div className="flex justify-between py-2 border-b border-[var(--color-border)]">
-            <span className="text-stone-light">Service</span>
-            <span className="font-medium text-stone">{service.name}</span>
+            <span className="text-text-secondary">Service</span>
+            <span className="font-medium text-text-secondary">{service.name}</span>
           </div>
           <div className="flex justify-between py-2 border-b border-[var(--color-border)]">
-            <span className="text-stone-light">Home Size</span>
-            <span className="font-medium text-stone capitalize">{bookingData.step2.homeSize.replace(/(\d)/, " $1")}</span>
+            <span className="text-text-secondary">Home Size</span>
+            <span className="font-medium text-text-secondary capitalize">{bookingData.step2.homeSize.replace(/(\d)/, " $1")}</span>
           </div>
           <div className="flex justify-between py-2 border-b border-[var(--color-border)]">
-            <span className="text-stone-light">Date & Time</span>
-            <span className="font-medium text-stone">
+            <span className="text-text-secondary">Date & Time</span>
+            <span className="font-medium text-text-secondary">
               {new Date(bookingData.step3.scheduledDate).toLocaleDateString()} at{" "}
               {new Date(`2000-01-01T${bookingData.step3.scheduledTime}`).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}
             </span>
           </div>
           <div className="flex justify-between py-2 border-b border-[var(--color-border)]">
-            <span className="text-stone-light">Address</span>
-            <span className="font-medium text-stone text-right">
+            <span className="text-text-secondary">Address</span>
+            <span className="font-medium text-text-secondary text-right">
               {bookingData.step4.address.street}<br />
               {bookingData.step4.address.city}, {bookingData.step4.address.postalCode}
             </span>
           </div>
           <div className="flex justify-between py-4">
-            <span className="text-stone font-medium">Total</span>
-            <span className="font-serif text-2xl text-navy-700">${calculatedPrice.toLocaleString()}</span>
+            <span className="text-text-secondary font-medium">Total</span>
+            <span className="font-serif text-2xl text-text-primary">${calculatedPrice.toLocaleString()}</span>
           </div>
         </div>
       </div>
 
       {/* Payment Notice */}
       <div className="p-4 bg-navy-700/5 border-l-4 border-navy-700">
-        <p className="text-sm text-stone">
+        <p className="text-sm text-text-secondary">
           <strong>Payment:</strong> You will be redirected to our secure payment processor after confirming. 
           We accept all major credit cards. Your booking is confirmed upon successful payment.
         </p>
       </div>
 
       {/* Terms */}
-      <p className="text-sm text-stone-light">
+      <p className="text-sm text-text-secondary">
         By confirming, you agree to our <a href="/terms" target="_blank" className="text-gold-600 hover:underline">Terms of Service</a> including 
         our cancellation policy (48 hours for full refund).
       </p>
@@ -665,7 +665,7 @@ function Step5Payment({
       </button>
 
       {/* Security Badge */}
-      <div className="flex items-center justify-center gap-2 text-sm text-stone-muted">
+      <div className="flex items-center justify-center gap-2 text-sm text-text-muted">
         <Shield className="w-4 h-4" />
         <span>Secure SSL Encryption</span>
       </div>
@@ -716,8 +716,8 @@ export default function BookingPage() {
             <div className="w-20 h-20 bg-gold-500 rounded-full flex items-center justify-center mx-auto mb-8">
               <Check className="w-10 h-10 text-navy-900" />
             </div>
-            <h1 className="font-serif text-4xl text-stone mb-4">Reservation Confirmed</h1>
-            <p className="text-stone-light mb-8">
+            <h1 className="font-serif text-4xl text-text-secondary mb-4">Reservation Confirmed</h1>
+            <p className="text-text-secondary mb-8">
               Thank you for choosing Everclean. A confirmation email has been sent to your inbox.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -736,10 +736,10 @@ export default function BookingPage() {
         {/* Header */}
         <AnimatedSection className="text-center mb-12">
           <span className="text-eyebrow mb-4 block">Reserve Your Service</span>
-          <h1 className="font-serif text-3xl md:text-4xl text-stone mb-4">
+          <h1 className="font-serif text-3xl md:text-4xl text-text-secondary mb-4">
             Book Your Cleaning
           </h1>
-          <p className="text-stone-light max-w-xl mx-auto">
+          <p className="text-text-secondary max-w-xl mx-auto">
             Complete the form below to schedule your white-glove service. 
             Our concierge team will confirm your booking within 2 hours.
           </p>
@@ -759,7 +759,7 @@ export default function BookingPage() {
                     onClick={() => isCompleted && setCurrentStep(step.number)}
                     disabled={!isCompleted && !isActive}
                     className={`flex flex-col items-center gap-2 transition-colors ${
-                      isActive ? "text-gold-500" : isCompleted ? "text-navy-700" : "text-stone-muted"
+                      isActive ? "text-gold-500" : isCompleted ? "text-text-primary" : "text-text-muted"
                     }`}
                   >
                     <div
@@ -768,7 +768,7 @@ export default function BookingPage() {
                           ? "border-gold-500 bg-gold-500 text-navy-900"
                           : isCompleted
                           ? "border-navy-700 bg-navy-700 text-[var(--color-ivory)]"
-                          : "border-stone-muted text-stone-muted"
+                          : "border-stone-muted text-text-muted"
                       }`}
                     >
                       {isCompleted ? (
@@ -846,7 +846,7 @@ export default function BookingPage() {
               <button
                 onClick={() => setCurrentStep(currentStep - 1)}
                 disabled={currentStep === 1}
-                className="flex items-center gap-2 px-6 py-3 text-sm font-medium text-stone hover:text-gold-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                className="flex items-center gap-2 px-6 py-3 text-sm font-medium text-text-secondary hover:text-gold-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" />
                 Back

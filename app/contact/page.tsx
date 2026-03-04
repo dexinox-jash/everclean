@@ -57,7 +57,7 @@ export default function ContactPage() {
               <Check className="w-8 h-8 text-navy-900" />
             </div>
             <h1 className="font-serif text-3xl text-stone mb-4">Message Received</h1>
-            <p className="text-stone-light mb-8">
+            <p className="text-text-secondary mb-8">
               Thank you for contacting Everclean. Our concierge team will respond within 2 business hours.
             </p>
             <a href="/" className="btn-secondary">Return Home</a>
@@ -84,7 +84,7 @@ export default function ContactPage() {
             <GoldLineReveal className="mb-6" />
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
-            <p className="text-lg text-[var(--color-ivory)]/70 max-w-2xl leading-relaxed">
+            <p className="text-lg text-light-tertiary max-w-2xl leading-relaxed">
               Whether you have questions about our services, need a custom quote, 
               or wish to discuss your estate&apos;s unique requirements, we&apos;re here to assist.
             </p>
@@ -107,7 +107,7 @@ export default function ContactPage() {
                       <Phone className="w-5 h-5 text-gold-500" />
                     </div>
                     <div>
-                      <p className="text-sm text-stone-muted uppercase tracking-wider mb-1">Phone</p>
+                      <p className="text-sm text-text-muted uppercase tracking-wider mb-1">Phone</p>
                       <p className="text-stone group-hover:text-gold-600 transition-colors">(519) 555-0123</p>
                     </div>
                   </a>
@@ -117,7 +117,7 @@ export default function ContactPage() {
                       <Mail className="w-5 h-5 text-gold-500" />
                     </div>
                     <div>
-                      <p className="text-sm text-stone-muted uppercase tracking-wider mb-1">Email</p>
+                      <p className="text-sm text-text-muted uppercase tracking-wider mb-1">Email</p>
                       <p className="text-stone group-hover:text-gold-600 transition-colors">concierge@everclean.ca</p>
                     </div>
                   </a>
@@ -127,7 +127,7 @@ export default function ContactPage() {
                       <MapPin className="w-5 h-5 text-gold-500" />
                     </div>
                     <div>
-                      <p className="text-sm text-stone-muted uppercase tracking-wider mb-1">Service Area</p>
+                      <p className="text-sm text-text-muted uppercase tracking-wider mb-1">Service Area</p>
                       <p className="text-stone">Waterloo Region, Ontario</p>
                     </div>
                   </div>
@@ -137,7 +137,7 @@ export default function ContactPage() {
                       <Clock className="w-5 h-5 text-gold-500" />
                     </div>
                     <div>
-                      <p className="text-sm text-stone-muted uppercase tracking-wider mb-1">Response Time</p>
+                      <p className="text-sm text-text-muted uppercase tracking-wider mb-1">Response Time</p>
                       <p className="text-stone">Within 2 business hours</p>
                     </div>
                   </div>
@@ -148,15 +148,15 @@ export default function ContactPage() {
                   <h3 className="font-serif text-lg text-stone mb-4">Office Hours</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-stone-light">Monday - Friday</span>
+                      <span className="text-text-secondary">Monday - Friday</span>
                       <span className="text-stone">8:00 AM - 6:00 PM</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-stone-light">Saturday</span>
+                      <span className="text-text-secondary">Saturday</span>
                       <span className="text-stone">9:00 AM - 4:00 PM</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-stone-light">Sunday</span>
+                      <span className="text-text-secondary">Sunday</span>
                       <span className="text-stone">Closed</span>
                     </div>
                   </div>
@@ -169,7 +169,7 @@ export default function ContactPage() {
               <AnimatedSection delay={0.2}>
                 <div className="bg-[var(--color-pure)] p-8 md:p-12 shadow-luxury">
                   <h2 className="font-serif text-2xl text-stone mb-2">Send a Message</h2>
-                  <p className="text-stone-light mb-8">Fill out the form below and our concierge will respond promptly.</p>
+                  <p className="text-text-secondary mb-8">Fill out the form below and our concierge will respond promptly.</p>
 
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -53,7 +53,7 @@ function LoginForm() {
         <h1 className="font-serif text-3xl text-[var(--color-ivory)] mb-4">
           Check Your Email
         </h1>
-        <p className="text-[var(--color-ivory)]/70 mb-8">
+        <p className="text-light-tertiary mb-8">
           We&apos;ve sent a magic link to <strong>{email}</strong>. Click the link to sign in to your client portal.
         </p>
         <Link
@@ -69,7 +69,7 @@ function LoginForm() {
   return (
     <>
       <h1 className="font-serif text-2xl text-stone mb-2">Welcome Back</h1>
-      <p className="text-stone-light text-sm mb-8">
+      <p className="text-text-secondary text-sm mb-8">
         Enter your email to receive a secure login link.
       </p>
 
@@ -113,7 +113,7 @@ function LoginForm() {
       </form>
 
       <div className="mt-8 pt-6 border-t border-[var(--color-border)] text-center">
-        <p className="text-sm text-stone-light">
+        <p className="text-sm text-text-secondary">
           Need help?{" "}
           <Link href="/contact" className="text-gold-600 hover:text-gold-700">
             Contact Concierge
@@ -136,7 +136,7 @@ export default function PortalLoginPage() {
         <div className="text-center mb-12">
           <Link href="/" className="inline-block">
             <span className="font-serif text-3xl text-[var(--color-ivory)]">Everclean</span>
-            <span className="block text-xs uppercase tracking-[0.2em] text-[var(--color-ivory)]/50 mt-1">
+            <span className="block text-xs uppercase tracking-[0.2em] text-light-muted mt-1">
               Client Portal
             </span>
           </Link>
@@ -153,7 +153,7 @@ export default function PortalLoginPage() {
           </Suspense>
         </div>
 
-        <p className="text-center mt-8 text-sm text-[var(--color-ivory)]/50">
+        <p className="text-center mt-8 text-sm text-light-muted">
           &copy; {new Date().getFullYear()} Everclean Luxury Services
         </p>
       </motion.div>

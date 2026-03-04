@@ -33,7 +33,7 @@ const stats = [
 
 export function TestimonialsSection() {
   return (
-    <section className="section-lg bg-[var(--color-pure)]">
+    <section className="section-lg bg-[var(--color-pure)]" aria-labelledby="testimonials-heading">
       <div className="container-luxury">
         {/* Stats Bar */}
         <AnimatedSection>
@@ -47,7 +47,7 @@ export function TestimonialsSection() {
                     duration={2}
                   />
                 </div>
-                <div className="text-xs uppercase tracking-wider text-stone-light">{stat.label}</div>
+                <div className="text-xs uppercase tracking-wider text-text-muted">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -60,7 +60,7 @@ export function TestimonialsSection() {
           </AnimatedSection>
           
           <AnimatedSection delay={0.1}>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-stone mb-6">
+            <h2 id="testimonials-heading" className="font-serif text-3xl md:text-4xl lg:text-5xl text-text-primary mb-6">
               Trusted by Waterloo Region&apos;s Most Distinguished Households
             </h2>
           </AnimatedSection>
@@ -70,25 +70,25 @@ export function TestimonialsSection() {
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial) => (
             <StaggerItem key={testimonial.author}>
-              <div className="bg-cream p-8 md:p-10 h-full flex flex-col">
+              <figure className="bg-cream p-8 md:p-10 h-full flex flex-col">
                 {/* Stars */}
-                <div className="flex gap-1 mb-6">
+                <div className="flex gap-1 mb-6" aria-label={`${testimonial.rating} out of 5 stars`}>
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-gold-500 text-gold-500" />
+                    <Star key={i} className="w-4 h-4 fill-gold-500 text-gold-500" aria-hidden="true" />
                   ))}
                 </div>
 
                 {/* Quote */}
-                <blockquote className="text-stone leading-relaxed mb-8 flex-grow">
+                <blockquote className="text-text-secondary leading-relaxed mb-8 flex-grow">
                   &ldquo;{testimonial.quote}&rdquo;
                 </blockquote>
 
                 {/* Author */}
-                <div>
-                  <p className="font-medium text-stone">{testimonial.author}</p>
-                  <p className="text-sm text-stone-light">{testimonial.location}</p>
-                </div>
-              </div>
+                <figcaption>
+                  <p className="font-semibold text-text-primary">{testimonial.author}</p>
+                  <p className="text-sm text-text-muted">{testimonial.location}</p>
+                </figcaption>
+              </figure>
             </StaggerItem>
           ))}
         </StaggerContainer>

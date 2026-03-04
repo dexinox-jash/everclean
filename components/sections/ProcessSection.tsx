@@ -49,7 +49,7 @@ function ProcessStep({ step, index }: { step: typeof steps[0]; index: number }) 
       <div className={`flex-1 ${isEven ? "text-right md:pr-12" : "text-left md:pl-12"}`}>
         <span className="font-serif text-5xl md:text-6xl text-gold-500/20">{step.number}</span>
         <h3 className="font-serif text-2xl md:text-3xl text-stone mt-2 mb-4">{step.title}</h3>
-        <p className="text-stone-light leading-relaxed max-w-md mx-auto md:mx-0">
+        <p className="text-text-secondary leading-relaxed max-w-md mx-auto md:mx-0">
           {step.description}
         </p>
       </div>
@@ -97,7 +97,7 @@ export function ProcessSection() {
           </AnimatedSection>
           
           <AnimatedSection delay={0.3}>
-            <p className="text-stone-light leading-relaxed">
+            <p className="text-text-secondary leading-relaxed">
               A seamless experience from first contact to final inspection. 
               We&apos;ve refined every touchpoint to respect your time and privacy.
             </p>

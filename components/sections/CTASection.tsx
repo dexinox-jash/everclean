@@ -30,7 +30,7 @@ export function CTASection() {
           </AnimatedSection>
 
           <AnimatedSection delay={0.3}>
-            <p className="text-lg text-stone-light leading-relaxed mb-10 max-w-xl mx-auto">
+            <p className="text-lg text-text-secondary leading-relaxed mb-10 max-w-xl mx-auto">
               Join the distinguished households of Waterloo Region who trust us with their most prized sanctuary. 
               Your consultation is complimentary.
             </p>
@@ -55,7 +55,7 @@ export function CTASection() {
           </AnimatedSection>
 
           <AnimatedSection delay={0.5}>
-            <p className="mt-8 text-sm text-stone-muted">
+            <p className="mt-8 text-sm text-text-muted">
               Response within 2 business hours
             </p>
           </AnimatedSection>

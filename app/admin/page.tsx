@@ -111,7 +111,7 @@ export default async function AdminDashboardPage() {
         <div className="container-luxury flex items-center justify-between">
           <div>
             <h1 className="font-serif text-xl">Admin Dashboard</h1>
-            <p className="text-sm text-[var(--color-ivory)]/60">Welcome, {session.user.name}</p>
+            <p className="text-sm text-light-secondary">Welcome, {session.user.name}</p>
           </div>
           <Link
             href="/"
@@ -130,7 +130,7 @@ export default async function AdminDashboardPage() {
               <Calendar className="w-8 h-8 text-gold-500" />
               <span className="text-2xl font-serif text-navy-700">{stats.todaysBookings}</span>
             </div>
-            <p className="text-sm text-stone-light">Today&apos;s Bookings</p>
+            <p className="text-sm text-text-secondary">Today&apos;s Bookings</p>
           </div>
 
           <div className="bg-[var(--color-pure)] p-6 shadow-luxury">
@@ -140,7 +140,7 @@ export default async function AdminDashboardPage() {
                 {formatCurrency(Number(stats.weeksRevenue))}
               </span>
             </div>
-            <p className="text-sm text-stone-light">Revenue This Week</p>
+            <p className="text-sm text-text-secondary">Revenue This Week</p>
           </div>
 
           <div className="bg-[var(--color-pure)] p-6 shadow-luxury">
@@ -148,7 +148,7 @@ export default async function AdminDashboardPage() {
               <Clock className="w-8 h-8 text-amber-500" />
               <span className="text-2xl font-serif text-navy-700">{stats.pendingConfirmations}</span>
             </div>
-            <p className="text-sm text-stone-light">Pending Confirmations</p>
+            <p className="text-sm text-text-secondary">Pending Confirmations</p>
           </div>
 
           <div className="bg-[var(--color-pure)] p-6 shadow-luxury">
@@ -156,7 +156,7 @@ export default async function AdminDashboardPage() {
               <MessageSquare className="w-8 h-8 text-gold-500" />
               <span className="text-2xl font-serif text-navy-700">{stats.newLeads}</span>
             </div>
-            <p className="text-sm text-stone-light">New Leads</p>
+            <p className="text-sm text-text-secondary">New Leads</p>
           </div>
         </div>
 
@@ -168,7 +168,7 @@ export default async function AdminDashboardPage() {
               <h2 className="font-serif text-xl text-stone">Recent Bookings</h2>
             </div>
             {recentBookings.length === 0 ? (
-              <div className="p-8 text-center text-stone-light">
+              <div className="p-8 text-center text-text-secondary">
                 No bookings found
               </div>
             ) : (
@@ -177,19 +177,19 @@ export default async function AdminDashboardPage() {
                   <div key={booking.id} className="p-6 flex items-center justify-between">
                     <div>
                       <div className="flex items-center gap-3 mb-1">
-                        <span className="text-xs text-stone-muted">{booking.bookingNumber}</span>
+                        <span className="text-xs text-text-muted">{booking.bookingNumber}</span>
                         <span className={`px-2 py-0.5 text-xs uppercase ${getStatusBadge(booking.status)}`}>
                           {booking.status}
                         </span>
                       </div>
                       <h3 className="font-medium text-stone">{booking.customerName}</h3>
-                      <p className="text-sm text-stone-light">{booking.service?.name || "N/A"}</p>
+                      <p className="text-sm text-text-secondary">{booking.service?.name || "N/A"}</p>
                     </div>
                     <div className="text-right">
                       <p className="font-serif text-lg text-navy-700">
                         {formatCurrency(Number(booking.calculatedPrice))}
                       </p>
-                      <p className="text-xs text-stone-muted">
+                      <p className="text-xs text-text-muted">
                         {new Date(booking.scheduledDate).toLocaleDateString()}
                       </p>
                     </div>
@@ -224,11 +224,11 @@ export default async function AdminDashboardPage() {
               <h2 className="font-serif text-xl mb-4">Overview</h2>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-[var(--color-ivory)]/70">Total Bookings</span>
+                  <span className="text-light-tertiary">Total Bookings</span>
                   <span className="font-serif text-xl">{stats.totalBookings}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[var(--color-ivory)]/70">Total Customers</span>
+                  <span className="text-light-tertiary">Total Customers</span>
                   <span className="font-serif text-xl">{stats.totalCustomers}</span>
                 </div>
               </div>

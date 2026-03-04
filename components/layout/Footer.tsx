@@ -33,7 +33,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-navy-900 text-[var(--color-ivory)]">
+    <footer className="bg-navy-900 text-light-primary">
       {/* Main Footer */}
       <div className="container-luxury section-md">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
@@ -41,24 +41,24 @@ export function Footer() {
           <div className="lg:col-span-4">
             <Link href="/" className="inline-block mb-6">
               <span className="font-serif text-2xl font-medium">Everclean</span>
-              <span className="block text-xs uppercase tracking-[0.2em] text-[var(--color-ivory)]/60 mt-1">
+              <span className="block text-xs uppercase tracking-[0.2em] text-light-muted mt-1">
                 Luxury Services
               </span>
             </Link>
-            <p className="text-[var(--color-ivory)]/70 text-sm leading-relaxed mb-6 max-w-sm">
+            <p className="text-light-secondary text-sm leading-relaxed mb-6 max-w-sm">
               Waterloo Region&apos;s premier white-glove cleaning and estate care service. 
               Discretion, excellence, and meticulous attention to detail since 2020.
             </p>
             
             {/* Trust Badges */}
             <div className="flex flex-wrap gap-3 mb-6">
-              <span className="inline-flex items-center px-3 py-1 text-xs bg-[var(--color-ivory)]/10 text-[var(--color-ivory)]/80">
+              <span className="inline-flex items-center px-3 py-1 text-xs bg-light-primary/10 text-light-secondary">
                 $5M Insured
               </span>
-              <span className="inline-flex items-center px-3 py-1 text-xs bg-[var(--color-ivory)]/10 text-[var(--color-ivory)]/80">
+              <span className="inline-flex items-center px-3 py-1 text-xs bg-light-primary/10 text-light-secondary">
                 Bonded
               </span>
-              <span className="inline-flex items-center px-3 py-1 text-xs bg-[var(--color-ivory)]/10 text-[var(--color-ivory)]/80">
+              <span className="inline-flex items-center px-3 py-1 text-xs bg-light-primary/10 text-light-secondary">
                 Vetted Staff
               </span>
             </div>
@@ -69,41 +69,41 @@ export function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--color-ivory)]/60 hover:text-gold-500 transition-colors"
-                aria-label="Instagram"
+                className="text-light-muted hover:text-gold-500 transition-colors"
+                aria-label="Follow us on Instagram"
               >
-                <Instagram className="w-5 h-5" />
+                <Instagram className="w-5 h-5" aria-hidden="true" />
               </a>
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--color-ivory)]/60 hover:text-gold-500 transition-colors"
-                aria-label="Facebook"
+                className="text-light-muted hover:text-gold-500 transition-colors"
+                aria-label="Follow us on Facebook"
               >
-                <Facebook className="w-5 h-5" />
+                <Facebook className="w-5 h-5" aria-hidden="true" />
               </a>
               <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[var(--color-ivory)]/60 hover:text-gold-500 transition-colors"
-                aria-label="LinkedIn"
+                className="text-light-muted hover:text-gold-500 transition-colors"
+                aria-label="Follow us on LinkedIn"
               >
-                <Linkedin className="w-5 h-5" />
+                <Linkedin className="w-5 h-5" aria-hidden="true" />
               </a>
             </div>
           </div>
 
           {/* Links Columns */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs uppercase tracking-[0.2em] text-gold-500 mb-4">Services</h4>
+            <h2 className="text-xs uppercase tracking-[0.2em] text-gold-500 mb-4">Services</h2>
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--color-ivory)]/70 hover:text-[var(--color-ivory)] transition-colors"
+                    className="text-sm text-light-secondary hover:text-light-primary transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -113,13 +113,13 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <h4 className="text-xs uppercase tracking-[0.2em] text-gold-500 mb-4">Company</h4>
+            <h2 className="text-xs uppercase tracking-[0.2em] text-gold-500 mb-4">Company</h2>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--color-ivory)]/70 hover:text-[var(--color-ivory)] transition-colors"
+                    className="text-sm text-light-secondary hover:text-light-primary transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -129,13 +129,13 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <h4 className="text-xs uppercase tracking-[0.2em] text-gold-500 mb-4">Support</h4>
+            <h2 className="text-xs uppercase tracking-[0.2em] text-gold-500 mb-4">Support</h2>
             <ul className="space-y-3">
               {footerLinks.support.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--color-ivory)]/70 hover:text-[var(--color-ivory)] transition-colors"
+                    className="text-sm text-light-secondary hover:text-light-primary transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -146,28 +146,28 @@ export function Footer() {
 
           {/* Contact Column */}
           <div className="lg:col-span-2">
-            <h4 className="text-xs uppercase tracking-[0.2em] text-gold-500 mb-4">Contact</h4>
+            <h2 className="text-xs uppercase tracking-[0.2em] text-gold-500 mb-4">Contact</h2>
             <ul className="space-y-4">
               <li>
                 <a
                   href="tel:+15195550123"
-                  className="flex items-center gap-2 text-sm text-[var(--color-ivory)]/70 hover:text-[var(--color-ivory)] transition-colors"
+                  className="flex items-center gap-2 text-sm text-light-secondary hover:text-light-primary transition-colors"
                 >
-                  <Phone className="w-4 h-4 text-gold-500" />
+                  <Phone className="w-4 h-4 text-gold-500" aria-hidden="true" />
                   <span>(519) 555-0123</span>
                 </a>
               </li>
               <li>
                 <a
                   href="mailto:concierge@everclean.ca"
-                  className="flex items-center gap-2 text-sm text-[var(--color-ivory)]/70 hover:text-[var(--color-ivory)] transition-colors"
+                  className="flex items-center gap-2 text-sm text-light-secondary hover:text-light-primary transition-colors"
                 >
-                  <Mail className="w-4 h-4 text-gold-500" />
+                  <Mail className="w-4 h-4 text-gold-500" aria-hidden="true" />
                   <span>concierge@everclean.ca</span>
                 </a>
               </li>
-              <li className="flex items-start gap-2 text-sm text-[var(--color-ivory)]/70">
-                <MapPin className="w-4 h-4 text-gold-500 mt-0.5 flex-shrink-0" />
+              <li className="flex items-start gap-2 text-sm text-light-secondary">
+                <MapPin className="w-4 h-4 text-gold-500 mt-0.5 flex-shrink-0" aria-hidden="true" />
                 <span>Waterloo Region, Ontario</span>
               </li>
             </ul>
@@ -176,10 +176,10 @@ export function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-[var(--color-ivory)]/10">
+      <div className="border-t border-light-primary/10">
         <div className="container-luxury py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-[var(--color-ivory)]/50">
+            <p className="text-sm text-light-muted">
               &copy; {currentYear} Everclean Luxury Services. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
@@ -187,7 +187,7 @@ export function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-xs text-[var(--color-ivory)]/50 hover:text-[var(--color-ivory)]/80 transition-colors"
+                  className="text-xs text-light-muted hover:text-light-secondary transition-colors"
                 >
                   {link.label}
                 </Link>

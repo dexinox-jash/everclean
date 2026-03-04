@@ -37,7 +37,7 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section className="section-lg bg-[var(--color-ivory)]">
+    <section className="section-lg bg-[var(--color-ivory)]" aria-labelledby="services-heading">
       <div className="container-luxury">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
@@ -46,7 +46,7 @@ export function ServicesSection() {
           </AnimatedSection>
           
           <AnimatedSection delay={0.1}>
-            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-stone mb-6">
+            <h2 id="services-heading" className="font-serif text-3xl md:text-4xl lg:text-5xl text-text-primary mb-6">
               Tailored Excellence for Every Residence
             </h2>
           </AnimatedSection>
@@ -56,7 +56,7 @@ export function ServicesSection() {
           </AnimatedSection>
           
           <AnimatedSection delay={0.3}>
-            <p className="text-stone-light leading-relaxed">
+            <p className="text-text-secondary leading-relaxed">
               From intimate apartments to grand estates, each service is customized 
               to your home&apos;s unique requirements and your discerning standards.
             </p>
@@ -65,10 +65,10 @@ export function ServicesSection() {
 
         {/* Services Grid */}
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {services.map((service, index) => (
+          {services.map((service) => (
             <StaggerItem key={service.title}>
               <Link href={service.href} className="group block h-full">
-                <motion.div
+                <motion.article
                   className={`relative h-full bg-[var(--color-pure)] p-8 md:p-10 transition-all duration-500 ${
                     service.featured ? "border-2 border-gold-500/30" : "border border-[var(--color-border)]"
                   }`}
@@ -77,7 +77,7 @@ export function ServicesSection() {
                 >
                   {/* Featured Badge */}
                   {service.featured && (
-                    <span className="absolute top-4 right-4 inline-flex items-center px-3 py-1 text-xs uppercase tracking-wider bg-gold-500/10 text-gold-600">
+                    <span className="absolute top-4 right-4 inline-flex items-center px-3 py-1 text-xs uppercase tracking-wider bg-gold-500/10 text-gold-600 font-semibold">
                       Most Popular
                     </span>
                   )}
@@ -87,36 +87,36 @@ export function ServicesSection() {
                     service.featured ? "bg-gold-500/10" : "bg-navy-700/5"
                   }`}>
                     <service.icon className={`w-7 h-7 ${
-                      service.featured ? "text-gold-500" : "text-navy-700"
-                    }`} />
+                      service.featured ? "text-gold-600" : "text-navy-700"
+                    }`} aria-hidden="true" />
                   </div>
 
                   {/* Content */}
-                  <h3 className="font-serif text-xl md:text-2xl text-stone mb-3 group-hover:text-gold-600 transition-colors">
+                  <h3 className="font-serif text-xl md:text-2xl text-text-primary mb-3 group-hover:text-gold-600 transition-colors">
                     {service.title}
                   </h3>
                   
-                  <p className="text-stone-light text-sm leading-relaxed mb-6">
+                  <p className="text-text-secondary text-sm leading-relaxed mb-6">
                     {service.description}
                   </p>
 
                   {/* Best For */}
-                  <p className="text-xs text-stone-muted uppercase tracking-wider mb-4">
+                  <p className="text-xs text-text-muted uppercase tracking-wider mb-4">
                     Best for: {service.bestFor}
                   </p>
 
                   {/* Price & CTA */}
                   <div className="flex items-center justify-between pt-6 border-t border-[var(--color-border)]">
                     <span className="font-serif text-lg text-navy-700">{service.price}</span>
-                    <span className="inline-flex items-center gap-1 text-sm font-medium text-gold-600 group-hover:gap-2 transition-all">
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-gold-600 group-hover:gap-2 transition-all">
                       Learn More
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </span>
                   </div>
 
                   {/* Hover Border Effect */}
-                  <div className="absolute inset-0 border-2 border-gold-500/0 group-hover:border-gold-500/20 transition-colors duration-500 pointer-events-none" />
-                </motion.div>
+                  <div className="absolute inset-0 border-2 border-gold-500/0 group-hover:border-gold-500/20 transition-colors duration-500 pointer-events-none" aria-hidden="true" />
+                </motion.article>
               </Link>
             </StaggerItem>
           ))}
@@ -124,15 +124,15 @@ export function ServicesSection() {
 
         {/* Bottom CTA */}
         <AnimatedSection delay={0.4} className="text-center">
-          <p className="text-stone-light text-sm mb-4">
+          <p className="text-text-secondary text-sm mb-4">
             All services include our white-glove guarantee
           </p>
           <Link
             href="/services"
-            className="inline-flex items-center gap-2 text-sm font-medium text-navy-700 hover:text-gold-600 transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-navy-700 hover:text-gold-600 transition-colors"
           >
             View All Services
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
           </Link>
         </AnimatedSection>
       </div>
