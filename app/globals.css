@@ -1,0 +1,434 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   EVERCLEAN LUXURY SERVICES - Design System 2025
+   "Quiet Luxury" aesthetic - Champagne Gold & Midnight Navy
+   ============================================================================ */
+
+:root {
+  /* --------------------------------------------------------------------------
+     PRIMARY COLORS - Midnight Navy
+     -------------------------------------------------------------------------- */
+  --color-navy-900: #0D1117;
+  --color-navy-800: #171923;
+  --color-navy-700: #1A202C;
+  --color-navy-600: #2D3748;
+  --color-navy-500: #4A5568;
+  
+  /* --------------------------------------------------------------------------
+     SECONDARY COLORS - Champagne Gold
+     -------------------------------------------------------------------------- */
+  --color-gold-500: #C9A962;
+  --color-gold-400: #E3C28A;
+  --color-gold-600: #B8974F;
+  --color-gold-300: #F0D9A8;
+  --color-gold-200: #F5E9C8;
+  
+  /* --------------------------------------------------------------------------
+     ACCENT COLORS
+     -------------------------------------------------------------------------- */
+  --color-terracotta: #A67C52;
+  --color-sage: #8A9A87;
+  --color-coral: #C9A962;
+  
+  /* --------------------------------------------------------------------------
+     NEUTRALS - Warm Ivory Based
+     -------------------------------------------------------------------------- */
+  --color-ivory: #FAF9F6;
+  --color-cream: #F5F4F0;
+  --color-pure: #FFFFFF;
+  --color-stone: #44403C;
+  --color-stone-light: #78716C;
+  --color-stone-muted: #A8A29E;
+  --color-border: #E7E5E4;
+  --color-border-light: #F0EFED;
+  
+  /* --------------------------------------------------------------------------
+     SEMANTIC MAPPING
+     -------------------------------------------------------------------------- */
+  --background: var(--color-ivory);
+  --foreground: var(--color-stone);
+  --card: var(--color-pure);
+  --card-foreground: var(--color-stone);
+  --popover: var(--color-pure);
+  --popover-foreground: var(--color-stone);
+  --primary: var(--color-navy-700);
+  --primary-foreground: var(--color-ivory);
+  --secondary: var(--color-gold-500);
+  --secondary-foreground: var(--color-navy-900);
+  --muted: var(--color-cream);
+  --muted-foreground: var(--color-stone-light);
+  --accent: var(--color-gold-500);
+  --accent-foreground: var(--color-navy-900);
+  --destructive: var(--color-terracotta);
+  --destructive-foreground: var(--color-pure);
+  --border: var(--color-border);
+  --input: var(--color-border);
+  --ring: var(--color-gold-500);
+  --radius: 0.5rem;
+  
+  /* --------------------------------------------------------------------------
+     ANIMATION TIMING
+     -------------------------------------------------------------------------- */
+  --ease-luxury: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-dramatic: cubic-bezier(0.87, 0, 0.13, 1);
+  
+  --duration-fast: 200ms;
+  --duration-normal: 400ms;
+  --duration-slow: 600ms;
+  --duration-slower: 800ms;
+  
+  /* --------------------------------------------------------------------------
+     SPACING SCALE
+     -------------------------------------------------------------------------- */
+  --section-xs: 3rem;
+  --section-sm: 5rem;
+  --section-md: 8rem;
+  --section-lg: 12rem;
+  --section-xl: 16rem;
+}
+
+/* ============================================================================
+   DARK MODE VARIABLES
+   ============================================================================ */
+.dark {
+  --background: var(--color-navy-900);
+  --foreground: var(--color-ivory);
+  --card: var(--color-navy-800);
+  --card-foreground: var(--color-ivory);
+  --popover: var(--color-navy-800);
+  --popover-foreground: var(--color-ivory);
+  --primary: var(--color-gold-500);
+  --primary-foreground: var(--color-navy-900);
+  --secondary: var(--color-navy-700);
+  --secondary-foreground: var(--color-ivory);
+  --muted: var(--color-navy-800);
+  --muted-foreground: var(--color-stone-muted);
+  --accent: var(--color-gold-500);
+  --accent-foreground: var(--color-navy-900);
+  --destructive: var(--color-terracotta);
+  --destructive-foreground: var(--color-ivory);
+  --border: var(--color-navy-600);
+  --input: var(--color-navy-600);
+  --ring: var(--color-gold-500);
+}
+
+/* ============================================================================
+   BASE STYLES
+   ============================================================================ */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-[var(--color-ivory)] text-[var(--color-stone)] antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* Selection styling */
+  ::selection {
+    background-color: var(--color-gold-200);
+    color: var(--color-navy-900);
+  }
+  
+  /* Focus visible styling */
+  :focus-visible {
+    @apply outline-none ring-2 ring-[var(--color-gold-500)] ring-offset-2 ring-offset-[var(--color-ivory)];
+  }
+}
+
+/* ============================================================================
+   TYPOGRAPHY UTILITIES
+   ============================================================================ */
+@layer utilities {
+  /* Font families */
+  .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+  
+  .font-sans {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  /* Section padding utilities */
+  .section-xs {
+    @apply py-12 md:py-16;
+  }
+  
+  .section-sm {
+    @apply py-16 md:py-20;
+  }
+  
+  .section-md {
+    @apply py-20 md:py-28;
+  }
+  
+  .section-lg {
+    @apply py-24 md:py-32;
+  }
+  
+  .section-xl {
+    @apply py-32 md:py-40;
+  }
+  
+  /* Container utilities */
+  .container-luxury {
+    @apply mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 xl:px-12;
+  }
+  
+  /* Text gradient for gold accents */
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--color-gold-400) 0%, var(--color-gold-500) 50%, var(--color-gold-600) 100%);
+  }
+  
+  /* Gold line divider */
+  .gold-line {
+    @apply h-px w-24;
+    background: linear-gradient(90deg, transparent, var(--color-gold-500), transparent);
+  }
+  
+  /* Luxury shadow */
+  .shadow-luxury {
+    box-shadow: 
+      0 4px 6px -1px rgba(26, 32, 44, 0.05),
+      0 10px 15px -3px rgba(26, 32, 44, 0.08),
+      0 20px 25px -5px rgba(26, 32, 44, 0.05);
+  }
+  
+  .shadow-luxury-lg {
+    box-shadow: 
+      0 10px 15px -3px rgba(26, 32, 44, 0.08),
+      0 20px 30px -5px rgba(26, 32, 44, 0.12),
+      0 40px 50px -10px rgba(26, 32, 44, 0.08);
+  }
+  
+  /* Card hover lift */
+  .hover-lift {
+    @apply transition-all duration-500;
+    transition-timing-function: var(--ease-luxury);
+  }
+  
+  .hover-lift:hover {
+    @apply -translate-y-1;
+    box-shadow: 
+      0 10px 20px -5px rgba(26, 32, 44, 0.1),
+      0 20px 40px -10px rgba(26, 32, 44, 0.08);
+  }
+  
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn var(--duration-slower) var(--ease-luxury) forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp var(--duration-slower) var(--ease-luxury) forwards;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn var(--duration-normal) var(--ease-spring) forwards;
+  }
+  
+  /* Eyebrow text style */
+  .text-eyebrow {
+    @apply text-xs font-medium uppercase tracking-[0.2em];
+    color: var(--color-gold-500);
+  }
+  
+  /* Body text colors */
+  .text-body {
+    color: var(--color-stone);
+  }
+  
+  .text-body-secondary {
+    color: var(--color-stone-light);
+  }
+  
+  .text-body-muted {
+    color: var(--color-stone-muted);
+  }
+}
+
+/* ============================================================================
+   KEYFRAME ANIMATIONS
+   ============================================================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ============================================================================
+   COMPONENT STYLES
+   ============================================================================ */
+@layer components {
+  /* Primary CTA Button */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-8 py-4 text-sm font-medium uppercase tracking-wider transition-all duration-300;
+    background-color: var(--color-gold-500);
+    color: var(--color-navy-900);
+    transition-timing-function: var(--ease-luxury);
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--color-gold-400);
+    @apply shadow-luxury;
+  }
+  
+  .btn-primary:active {
+    background-color: var(--color-gold-600);
+    transform: scale(0.98);
+  }
+  
+  /* Secondary Button */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-8 py-4 text-sm font-medium uppercase tracking-wider border-2 transition-all duration-300;
+    border-color: var(--color-navy-700);
+    color: var(--color-navy-700);
+    background-color: transparent;
+    transition-timing-function: var(--ease-luxury);
+  }
+  
+  .btn-secondary:hover {
+    background-color: var(--color-navy-700);
+    color: var(--color-ivory);
+  }
+  
+  /* Ghost Button */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium transition-all duration-300;
+    color: var(--color-stone);
+    background-color: transparent;
+    transition-timing-function: var(--ease-luxury);
+  }
+  
+  .btn-ghost:hover {
+    color: var(--color-gold-500);
+  }
+  
+  /* Luxury Card */
+  .card-luxury {
+    @apply bg-[var(--color-pure)] p-8 md:p-10 transition-all duration-500;
+    transition-timing-function: var(--ease-luxury);
+  }
+  
+  .card-luxury:hover {
+    @apply -translate-y-2;
+    box-shadow: 
+      0 20px 40px -10px rgba(26, 32, 44, 0.1),
+      0 40px 60px -20px rgba(26, 32, 44, 0.08);
+  }
+  
+  /* Form Input Styling */
+  .input-luxury {
+    @apply w-full px-4 py-3 bg-transparent border text-base transition-all duration-300;
+    border-color: var(--color-border);
+    color: var(--color-stone);
+  }
+  
+  .input-luxury:focus {
+    @apply outline-none;
+    border-color: var(--color-gold-500);
+  }
+  
+  .input-luxury::placeholder {
+    color: var(--color-stone-muted);
+  }
+  
+  /* Nav Link Styling */
+  .nav-link {
+    @apply relative text-sm font-medium transition-colors duration-300;
+    color: var(--color-stone);
+  }
+  
+  .nav-link:hover {
+    color: var(--color-gold-500);
+  }
+  
+  .nav-link::after {
+    @apply absolute bottom-0 left-0 w-0 h-px transition-all duration-300;
+    content: '';
+    background-color: var(--color-gold-500);
+  }
+  
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   ============================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================================
+   SCROLLBAR STYLING
+   ============================================================================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-stone-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-stone-light);
+}

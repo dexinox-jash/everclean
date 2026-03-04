@@ -1,0 +1,413 @@
+// PRISMA SCHEMA - Everclean Luxury Services Platform
+// Complete implementation for HNWI concierge cleaning service
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+  MANAGER
+  STAFF
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+  RESCHEDULED
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  PAID
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum NotificationType {
+  BOOKING_CONFIRMED
+  PAYMENT_RECEIVED
+  REMINDER_24H
+  STAFF_ARRIVING
+  COMPLETION_NOTICE
+  CANCELLATION
+}
+
+enum ContactSubject {
+  consultation
+  quote
+  careers
+  general
+}
+
+// ============================================================================
+// USER & AUTH MODELS
+// ============================================================================
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  phone         String?
+  role          UserRole  @default(CUSTOMER)
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  accounts      Account[]
+  sessions      Session[]
+  bookings      Booking[]
+  contactForms  ContactForm[]
+  reviews       Review[]
+  addresses     Address[]
+  preferences   UserPreference?
+
+  @@map("users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// ============================================================================
+// ADDRESS MODEL (Separate for multi-property support)
+// ============================================================================
+
+model Address {
+  id          String   @id @default(cuid())
+  userId      String?  @map("user_id")
+  street      String
+  city        String
+  postalCode  String   @map("postal_code")
+  province    String   @default("Ontario")
+  country     String   @default("Canada")
+  isPrimary   Boolean  @default(false) @map("is_primary")
+  accessNotes String?  @map("access_notes") // "Side gate code: 1234"
+  parkingInfo String?  @map("parking_info")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookings    Booking[]
+
+  @@map("addresses")
+}
+
+// ============================================================================
+// SERVICE MODEL
+// ============================================================================
+
+model Service {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  name             String   // "Estate White-Glove Cleaning"
+  shortDescription String   @map("short_description")
+  fullDescription  String   @db.Text @map("full_description")
+  basePrice        Decimal  @map("base_price") @db.Decimal(10, 2)
+  priceMultiplier  Json?    @map("price_multiplier") // {"studio": 1, "2bed": 1.5}
+  durationHours    Float    @map("duration_hours")
+  features         String[] // Array of inclusions
+  bestFor          String?  @map("best_for") // "Homes 4000+ sq ft with fine art"
+  requiresConsult  Boolean  @default(false) @map("requires_consult")
+  isActive         Boolean  @default(true) @map("is_active")
+  isPopular        Boolean  @default(false) @map("is_popular")
+  sortOrder        Int      @default(0) @map("sort_order")
+  icon             String   @default("Sparkles")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  bookings         Booking[]
+
+  @@map("services")
+}
+
+// ============================================================================
+// STAFF MODELS
+// ============================================================================
+
+model Staff {
+  id          String    @id @default(cuid())
+  name        String
+  email       String    @unique
+  phone       String
+  bio         String?   // Short profile for client portal
+  photo       String?   // URL to professional headshot
+  role        String    @default("cleaner") // cleaner, supervisor, manager
+  isActive    Boolean   @default(true) @map("is_active")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  bookings    Booking[]
+  schedules   StaffSchedule[]
+
+  @@map("staff")
+}
+
+model StaffSchedule {
+  id        String    @id @default(cuid())
+  staffId   String    @map("staff_id")
+  date      DateTime
+  startTime String    @map("start_time") // "09:00"
+  endTime   String    @map("end_time")   // "17:00"
+  isBooked  Boolean   @default(false) @map("is_booked")
+  bookingId String?   @map("booking_id")
+
+  staff     Staff     @relation(fields: [staffId], references: [id], onDelete: Cascade)
+
+  @@unique([staffId, date, startTime])
+  @@index([date, isBooked])
+  @@map("staff_schedules")
+}
+
+// ============================================================================
+// BOOKING MODEL
+// ============================================================================
+
+model Booking {
+  id                String        @id @default(cuid())
+  bookingNumber     String        @unique @map("booking_number") // EC-20241204-8F3A
+
+  // Relations
+  userId            String?       @map("user_id")
+  user              User?         @relation(fields: [userId], references: [id])
+  serviceId         String        @map("service_id")
+  serviceName       String        @map("service_name")
+  service           Service       @relation(fields: [serviceId], references: [id])
+  addressId         String        @map("address_id")
+  address           Address       @relation(fields: [addressId], references: [id])
+  staffId           String?       @map("staff_id")
+  staff             Staff?        @relation(fields: [staffId], references: [id])
+
+  // Customer Info (denormalized for non-registered bookings)
+  customerName      String        @map("customer_name")
+  customerEmail     String        @map("customer_email")
+  customerPhone     String        @map("customer_phone")
+
+  // Service Details
+  homeSize          String        @map("home_size") // "studio", "2bed", "estate"
+  calculatedPrice   Decimal       @map("calculated_price") @db.Decimal(10, 2)
+  specialRequests   String?       @map("special_requests") @db.Text
+  accessType        String        @default("present") @map("access_type") // "present", "key", "doorman"
+  hasPets           Boolean       @default(false) @map("has_pets")
+  hasFineArt        Boolean       @default(false) @map("has_fine_art")
+
+  // Schedule
+  scheduledDate     DateTime      @map("scheduled_date")
+  scheduledTime     String        @map("scheduled_time") // "09:00" in 24h format
+  duration          Int           @default(3) // Actual hours assigned
+  endTime           String?       @map("end_time")
+
+  // Status & Payment
+  status            BookingStatus @default(PENDING)
+  paymentStatus     PaymentStatus @default(PENDING) @map("payment_status")
+  paymentIntentId   String?       @map("payment_intent_id")
+  amountPaid        Decimal?      @map("amount_paid") @db.Decimal(10, 2)
+
+  // Timestamps
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
+  confirmedAt       DateTime?     @map("confirmed_at")
+  completedAt       DateTime?     @map("completed_at")
+  cancelledAt       DateTime?     @map("cancelled_at")
+  cancellationReason String?      @map("cancellation_reason")
+
+  // Relations
+  history           BookingHistory[]
+  notifications     Notification[]
+  review            Review?
+
+  @@index([scheduledDate])
+  @@index([status])
+  @@index([userId])
+  @@index([customerEmail])
+  @@map("bookings")
+}
+
+model BookingHistory {
+  id          String    @id @default(cuid())
+  bookingId   String    @map("booking_id")
+  action      String    // "CREATED", "CONFIRMED", "STAFF_ASSIGNED"
+  actor       String    // "SYSTEM", "ADMIN:John", "USER"
+  details     Json?     // { "oldStatus": "PENDING", "newStatus": "CONFIRMED" }
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  booking     Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@map("booking_history")
+}
+
+// ============================================================================
+// REVIEW MODEL
+// ============================================================================
+
+model Review {
+  id          String   @id @default(cuid())
+  bookingId   String   @unique @map("booking_id")
+  booking     Booking  @relation(fields: [bookingId], references: [id])
+  userId      String   @map("user_id")
+  user        User     @relation(fields: [userId], references: [id])
+
+  rating      Int      // 1-5
+  comment     String?  @db.Text
+  isPublic    Boolean  @default(false) @map("is_public")
+  isVerified  Boolean  @default(true) @map("is_verified")
+  adminReply  String?  @map("admin_reply") @db.Text
+
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([isPublic, createdAt])
+  @@map("reviews")
+}
+
+// ============================================================================
+// NOTIFICATION MODEL
+// ============================================================================
+
+model Notification {
+  id          String           @id @default(cuid())
+  bookingId   String           @map("booking_id")
+  type        NotificationType
+  recipient   String           // Email or phone
+  content     String           // Rendered message
+  isSent      Boolean          @default(false) @map("is_sent")
+  sentAt      DateTime?        @map("sent_at")
+  error       String?          // If failed
+
+  booking     Booking          @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@index([recipient])
+  @@index([isSent])
+  @@map("notifications")
+}
+
+// ============================================================================
+// CONTACT FORM MODEL
+// ============================================================================
+
+model ContactForm {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  subject     String   // "consultation", "quote", "careers", "general"
+  message     String   @db.Text
+  userId      String?  @map("user_id")
+  user        User?    @relation(fields: [userId], references: [id])
+  status      String   @default("NEW") // NEW, IN_PROGRESS, RESOLVED
+  adminNotes  String?  @map("admin_notes") @db.Text
+  createdAt   DateTime @default(now()) @map("created_at")
+  resolvedAt  DateTime? @map("resolved_at")
+
+  @@index([email])
+  @@index([status])
+  @@map("contact_forms")
+}
+
+// ============================================================================
+// USER PREFERENCES MODEL
+// ============================================================================
+
+model UserPreference {
+  id                  String   @id @default(cuid())
+  userId              String   @unique @map("user_id")
+  preferredContact    String   @default("email") @map("preferred_contact") // "email", "sms", "call"
+  notesForStaff       String?  @map("notes_for_staff") @db.Text
+  entryInstructions   String?  @map("entry_instructions")
+  marketingConsent    Boolean  @default(false) @map("marketing_consent")
+
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_preferences")
+}
+
+// ============================================================================
+// GIFT CARD MODEL
+// ============================================================================
+
+model GiftCard {
+  id             String    @id @default(cuid())
+  code           String    @unique // EC-GIFT-XXXX-XXXX
+  amount         Decimal   @db.Decimal(10, 2)
+  purchaserName  String    @map("purchaser_name")
+  purchaserEmail String    @map("purchaser_email")
+  recipientName  String?   @map("recipient_name")
+  recipientEmail String?   @map("recipient_email")
+  message        String?
+  isRedeemed     Boolean   @default(false) @map("is_redeemed")
+  redeemedAt     DateTime? @map("redeemed_at")
+  redeemedBy     String?   @map("redeemed_by") // User ID
+  expiresAt      DateTime? @map("expires_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  @@map("gift_cards")
+}
+
+// ============================================================================
+// SITE CONFIG MODEL
+// ============================================================================
+
+model SiteConfig {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String   @db.Text
+  description String?
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("site_config")
+}
