@@ -4,6 +4,7 @@ import { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Mail, ArrowRight, Loader2, AlertCircle } from "lucide-react";
 
@@ -134,8 +135,15 @@ export default function PortalLoginPage() {
       >
         {/* Logo */}
         <div className="text-center mb-12">
-          <Link href="/" className="inline-block">
-            <span className="font-serif text-3xl text-[var(--color-ivory)]">Everclean</span>
+          <Link href="/" className="inline-flex flex-col items-center gap-3">
+            <Image
+              src="/icon-192.png"
+              alt="Everclean Luxury Services"
+              width={64}
+              height={64}
+              className="rounded-xl"
+              priority
+            />
             <span className="block text-xs uppercase tracking-[0.2em] text-light-muted mt-1">
               Client Portal
             </span>

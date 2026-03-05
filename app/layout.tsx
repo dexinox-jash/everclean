@@ -36,6 +36,14 @@ export const metadata: Metadata = {
   authors: [{ name: "Everclean Luxury Services" }],
   creator: "Everclean Luxury Services",
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://everclean.ca"),
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_CA",

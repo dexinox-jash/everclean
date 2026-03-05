@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
 
@@ -42,13 +43,14 @@ export function Header() {
         <nav className="flex items-center justify-between h-20 md:h-24" aria-label="Main navigation">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <span
-              className={`font-serif text-xl md:text-2xl font-medium tracking-tight transition-colors duration-300 ${
-                isScrolled ? "text-navy-700" : "text-light-primary"
-              }`}
-            >
-              Everclean
-            </span>
+            <Image
+              src="/icon-192.png"
+              alt="Everclean Luxury Services"
+              width={40}
+              height={40}
+              className="rounded-lg"
+              priority
+            />
             <span
               className={`hidden sm:block text-xs uppercase tracking-[0.2em] transition-colors duration-300 ${
                 isScrolled ? "text-text-muted" : "text-light-secondary"

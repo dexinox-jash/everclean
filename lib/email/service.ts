@@ -152,6 +152,7 @@ export async function sendContactAutoReply(contact: ContactForm) {
 // =============================================================================
 
 function generateBookingConfirmationHtml(booking: BookingWithAddress): string {
+  const logoUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://everclean.ca"}/icon-192.png`;
   return `
     <!DOCTYPE html>
     <html>
@@ -163,7 +164,9 @@ function generateBookingConfirmationHtml(booking: BookingWithAddress): string {
         body { font-family: Georgia, serif; line-height: 1.6; color: #1c1917; background: #faf9f6; }
         .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
         .header { text-align: center; margin-bottom: 40px; }
-        .logo { font-size: 28px; color: #1a202c; margin-bottom: 8px; }
+        .logo { display: flex; flex-direction: column; align-items: center; margin-bottom: 8px; }
+        .logo img { width: 64px; height: 64px; border-radius: 12px; }
+        .logo-text { font-size: 28px; color: #1a202c; margin-top: 8px; }
         .tagline { font-size: 12px; color: #c9a962; letter-spacing: 2px; text-transform: uppercase; }
         .booking-number { background: #1a202c; color: #fff; padding: 12px 24px; display: inline-block; margin: 20px 0; }
         .details { background: #fff; padding: 30px; margin: 20px 0; }
@@ -179,7 +182,10 @@ function generateBookingConfirmationHtml(booking: BookingWithAddress): string {
     <body>
       <div class="container">
         <div class="header">
-          <div class="logo">Everclean</div>
+          <div class="logo">
+            <img src="${logoUrl}" alt="Everclean Luxury Services" />
+            <div class="logo-text">Everclean</div>
+          </div>
           <div class="tagline">Luxury Services</div>
         </div>
         
@@ -317,8 +323,14 @@ function generateContactText(contact: ContactForm): string {
 }
 
 function generateContactAutoReplyHtml(contact: ContactForm): string {
+  const logoUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://everclean.ca"}/icon-192.png`;
   return `
     <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 40px 20px;">
+      <div style="text-align: center; margin-bottom: 30px;">
+        <img src="${logoUrl}" alt="Everclean Luxury Services" style="width: 64px; height: 64px; border-radius: 12px;" />
+        <div style="font-size: 24px; color: #1a202c; margin-top: 8px;">Everclean</div>
+        <div style="font-size: 12px; color: #c9a962; letter-spacing: 2px; text-transform: uppercase;">Luxury Services</div>
+      </div>
       <h1 style="font-weight: normal; color: #1a202c;">Thank You for Contacting Us</h1>
       <p>Dear ${contact.name},</p>
       <p>We have received your message regarding "${contact.subject}" and will get back to you within 24 hours.</p>
