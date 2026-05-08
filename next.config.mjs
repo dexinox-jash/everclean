@@ -114,3 +114,4 @@ const sentryConfig = {
 };
 
 export default withSentryConfig(nextConfig, sentryConfig);
+
