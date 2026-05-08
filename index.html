@@ -1,0 +1,983 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Everclean Luxury Services — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700;9..144,900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg:           #FAF9F6;
+  --bg-elevated:  #FFFFFF;
+  --bg-inset:     #F5F3EF;
+  --text:         #1C1917;
+  --text-soft:    #44403C;
+  --text-mute:    #78716C;
+  --text-faint:   #A8A29E;
+  --gold:         #D4AF37;
+  --gold-deep:    #B5952F;
+  --gold-soft:    rgba(212, 175, 55, 0.15);
+  --gold-line:    rgba(212, 175, 55, 0.35);
+  --navy:         #0A1929;
+  --line:         #E7E5E4;
+  --line-warm:    #D6D3D1;
+  --serif:    'Fraunces', Georgia, serif;
+  --sans:     'Inter', system-ui, sans-serif;
+  --mono:     'JetBrains Mono', ui-monospace, monospace;
+  --ease:     cubic-bezier(0.22, 1, 0.36, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text-soft);
+  font-family: var(--sans); font-size: 1.0625rem; line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01", "cv11"; overflow-x: hidden;
+}
+::selection { background: var(--gold-soft); color: var(--text); }
+body::before {
+  content: ''; position: fixed; inset: -10% -10% auto -10%; height: 70vh;
+  background:
+    radial-gradient(ellipse 60% 100% at 70% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 100% at 20% 10%, rgba(212, 175, 55, 0.06) 0%, transparent 50%);
+  pointer-events: none; z-index: 0;
+}
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.55   0 0 0 0 0.5   0 0 0 0 0.43   0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity: 0.025; pointer-events: none; z-index: 1; mix-blend-mode: multiply;
+}
+a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--gold-line); transition: border-color 200ms; }
+a:hover { border-bottom-color: var(--gold); }
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; color: var(--text); letter-spacing: -0.015em; }
+
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 2; }
+section { padding: 9rem 0; position: relative; z-index: 2; }
+section + section { border-top: 1px solid var(--line); }
+
+.eye {
+  font-family: var(--mono); font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: 0.28em;
+  color: var(--gold-deep); margin-bottom: 2.5rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.eye::before { content: ''; width: 36px; height: 1px; background: var(--gold); }
+
+.top {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(250, 249, 246, 0.78);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line); padding: 1.1rem 2rem;
+  font-family: var(--mono); font-size: 0.78rem; color: var(--text-mute);
+  display: flex; justify-content: space-between; align-items: center;
+  letter-spacing: 0.04em;
+}
+.top .left, .top .right { display: flex; gap: 1.25rem; align-items: center; }
+.top .name { color: var(--text); font-weight: 600; letter-spacing: 0.12em; font-family: var(--serif); }
+.top .tag { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--gold-deep); }
+.top .tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+.top a { border: none; color: var(--text-mute); }
+.top a:hover { color: var(--text); }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 800ms var(--ease), transform 800ms var(--ease); }
+.reveal.visible { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: 80ms; }
+.reveal.d2 { transition-delay: 160ms; }
+.reveal.d3 { transition-delay: 240ms; }
+.reveal.d4 { transition-delay: 320ms; }
+
+/* HERO */
+.hero { padding: 12rem 0 8rem; }
+.hero h1 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(2.75rem, 7.5vw, 6rem); line-height: 1.0;
+  letter-spacing: -0.025em; max-width: 22ch;
+  margin-bottom: 2.5rem; color: var(--text);
+}
+.hero h1 em { font-style: italic; font-weight: 400; color: var(--gold-deep); font-variation-settings: "opsz" 144; }
+.hero .lede { font-size: 1.3rem; line-height: 1.55; color: var(--text-soft); max-width: 60ch; margin-bottom: 3rem; font-weight: 400; }
+.hero .meta {
+  font-family: var(--mono); font-size: 0.78rem; color: var(--text-mute);
+  display: flex; flex-wrap: wrap; gap: 2rem;
+  margin-top: 4rem; padding-top: 2rem;
+  border-top: 1px solid var(--line); letter-spacing: 0.05em;
+}
+.hero .meta div { display: flex; flex-direction: column; gap: 0.4rem; }
+.hero .meta .k { color: var(--text-faint); text-transform: uppercase; font-size: 0.68rem; letter-spacing: 0.2em; }
+.hero .meta .v { color: var(--text); }
+
+.cta {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  padding: 1rem 1.75rem; background: var(--navy); color: var(--bg);
+  font-family: var(--sans); font-size: 1rem; font-weight: 500;
+  border: 1px solid var(--navy); border-radius: 2px;
+  transition: all 250ms var(--ease); letter-spacing: 0.01em;
+}
+.cta:hover { background: var(--gold-deep); border-color: var(--gold-deep); color: white; transform: translateY(-1px); }
+.cta::after { content: '→'; transition: transform 200ms; }
+.cta:hover::after { transform: translateX(3px); }
+.cta-ghost {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 1rem 0; margin-left: 2rem;
+  color: var(--text-soft); font-family: var(--sans); font-size: 1rem;
+  border: none; border-bottom: 1px solid var(--line-warm);
+}
+.cta-ghost:hover { color: var(--gold-deep); border-bottom-color: var(--gold); }
+
+/* DUAL */
+.dual { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 5rem; padding-top: 4rem; border-top: 1px solid var(--line); }
+.dual .card { position: relative; }
+.dual .card::before { content: attr(data-num); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.3em; color: var(--gold-deep); text-transform: uppercase; display: block; margin-bottom: 1rem; }
+.dual h3 { font-family: var(--serif); font-weight: 400; font-size: 1.5rem; line-height: 1.25; margin-bottom: 1rem; color: var(--text); }
+.dual p { color: var(--text-soft); font-size: 1rem; line-height: 1.65; }
+
+.h2-intro { font-size: clamp(2rem, 4.5vw, 3.5rem); line-height: 1.1; max-width: 22ch; margin-bottom: 1.5rem; }
+.h2-intro + .lede { font-size: 1.15rem; color: var(--text-soft); max-width: 65ch; margin-bottom: 0; }
+
+/* CARD GRID */
+.cards { display: grid; gap: 1.5rem; margin-top: 3rem; }
+.cards.c2 { grid-template-columns: 1fr 1fr; }
+.cards.c4 { grid-template-columns: repeat(4, 1fr); }
+.cards.c5 { grid-template-columns: repeat(5, 1fr); }
+.card-block {
+  padding: 2rem; border: 1px solid var(--line); background: var(--bg-elevated);
+  border-radius: 2px; transition: border-color 250ms, transform 250ms var(--ease);
+}
+.card-block:hover { border-color: var(--gold-line); transform: translateY(-2px); }
+.card-block .label { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--gold-deep); margin-bottom: 1rem; }
+.card-block h3 { font-family: var(--serif); font-weight: 400; font-size: 1.2rem; line-height: 1.3; margin-bottom: 0.85rem; color: var(--text); letter-spacing: -0.015em; }
+.card-block p { color: var(--text-soft); font-size: 0.98rem; line-height: 1.6; }
+
+/* PROCESS-META */
+.process-meta { margin-top: 2.5rem; padding: 2.5rem 3rem; border-left: 2px solid var(--gold); background: var(--bg-elevated); border-radius: 2px; }
+.process-meta .label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 1rem; }
+.process-meta p { font-family: var(--serif); font-style: italic; font-size: 1.2rem; line-height: 1.55; color: var(--text); letter-spacing: -0.005em; }
+.process-meta p code { font-family: var(--mono); font-style: normal; font-size: 0.95rem; background: var(--bg-inset); padding: 1px 7px; border-radius: 2px; color: var(--gold-deep); border: 1px solid var(--line); }
+
+/* PSR */
+.psr { margin-top: 3rem; }
+.psr .step { padding: 3rem 0; display: grid; grid-template-columns: 220px 1fr; gap: 4rem; align-items: start; border-top: 1px solid var(--line); }
+.psr .step:last-child { border-bottom: 1px solid var(--line); }
+.psr .step .label { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.28em; color: var(--gold-deep); padding-top: 0.7rem; }
+.psr .step h3 { font-family: var(--serif); font-weight: 400; font-size: 1.85rem; line-height: 1.2; margin-bottom: 1.25rem; letter-spacing: -0.02em; }
+.psr .step p { color: var(--text-soft); font-size: 1.0625rem; line-height: 1.65; }
+
+/* VIZ */
+.viz { margin-top: 4rem; padding: 2.5rem; border: 1px solid var(--line); background: var(--bg-elevated); border-radius: 2px; overflow-x: auto; }
+.viz-cap { font-family: var(--mono); font-size: 0.72rem; color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.22em; margin-bottom: 1.5rem; }
+.viz-svg { display: block; max-width: 100%; height: auto; }
+.arch-svg .col-title { font-family: var(--mono); font-weight: 500; font-size: 11px; fill: var(--text); letter-spacing: 0.3em; }
+.arch-svg .col-sub { font-family: var(--mono); font-size: 9px; fill: var(--text-mute); letter-spacing: 0.18em; }
+.arch-svg .layer-name { font-family: var(--serif); font-weight: 500; font-size: 13px; fill: var(--text); }
+.arch-svg .layer-detail { font-family: var(--mono); font-size: 10px; fill: var(--text-mute); }
+.arch-svg .rect { fill: var(--bg); stroke: var(--line-warm); stroke-width: 1; }
+.arch-svg .rect.accent { fill: var(--bg); stroke: var(--gold); stroke-width: 1.5; }
+.arch-svg .arrow { stroke: var(--gold-deep); stroke-width: 1.2; fill: none; opacity: 0.7; marker-end: url(#arrowG); }
+.arch-svg .layer-num { font-family: var(--mono); font-size: 10px; fill: var(--gold-deep); letter-spacing: 0.12em; }
+.arch-svg .side-pill { fill: var(--bg-inset); stroke: var(--line-warm); stroke-width: 1; }
+.arch-svg .side-name { font-family: var(--mono); font-size: 9.5px; fill: var(--text); letter-spacing: 0.05em; }
+.arch-svg .side-tag { font-family: var(--mono); font-size: 8.5px; fill: var(--text-mute); }
+
+.geo-svg .ring-outer { fill: none; stroke: var(--gold); stroke-width: 1.5; stroke-dasharray: 4 4; opacity: 0.7; }
+.geo-svg .ring-inner { fill: var(--gold-soft); stroke: var(--gold); stroke-width: 1; }
+.geo-svg .property { fill: var(--navy); }
+.geo-svg .staff-ok { fill: var(--gold-deep); }
+.geo-svg .staff-fail { fill: none; stroke: var(--text-mute); stroke-width: 1.5; }
+.geo-svg .label { font-family: var(--mono); font-size: 10px; fill: var(--text); }
+.geo-svg .label-mute { font-family: var(--mono); font-size: 10px; fill: var(--text-mute); }
+.geo-svg .axis { stroke: var(--line); stroke-width: 0.5; stroke-dasharray: 2 3; }
+.geo-svg .ok { font-family: var(--mono); font-size: 10px; fill: var(--gold-deep); }
+.geo-svg .fail { font-family: var(--mono); font-size: 10px; fill: var(--text-mute); }
+
+/* DEEP DIVE */
+.algo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+.math { background: var(--bg-inset); border: 1px solid var(--line); border-left: 2px solid var(--gold); padding: 1.5rem 1.75rem; border-radius: 2px; font-family: var(--mono); font-size: 0.92rem; color: var(--text-soft); line-height: 1.85; margin: 1.5rem 0; }
+.math .v { color: var(--text); font-weight: 500; }
+.math .o { color: var(--gold-deep); }
+.math .c { color: var(--text-mute); font-style: italic; }
+
+.policy-table { margin-top: 3rem; width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 0.92rem; }
+.policy-table th, .policy-table td { padding: 1.1rem 1.25rem; text-align: left; border-bottom: 1px solid var(--line); }
+.policy-table th { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--text-mute); font-weight: 500; background: var(--bg-inset); }
+.policy-table td.policy { color: var(--text); font-weight: 500; }
+.policy-table td.value { color: var(--gold-deep); }
+.policy-table td.note { color: var(--text-mute); font-size: 0.85rem; }
+
+.callout { margin-top: 3rem; padding: 2.5rem 3rem; border-left: 2px solid var(--gold); background: var(--bg-elevated); border-radius: 2px; }
+.callout .label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 1rem; }
+.callout p { font-family: var(--serif); font-style: italic; font-size: 1.2rem; line-height: 1.5; color: var(--text); letter-spacing: -0.005em; }
+
+/* FEATURES */
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--line); margin-top: 4rem; border: 1px solid var(--line); }
+.feat { background: var(--bg); padding: 2.25rem; transition: background 250ms; }
+.feat:hover { background: var(--bg-elevated); }
+.feat .num { font-family: var(--mono); font-size: 0.7rem; color: var(--gold-deep); letter-spacing: 0.25em; margin-bottom: 0.85rem; }
+.feat h3 { font-family: var(--serif); font-weight: 400; font-size: 1.25rem; line-height: 1.25; margin-bottom: 0.85rem; color: var(--text); letter-spacing: -0.015em; }
+.feat p { color: var(--text-soft); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1rem; }
+.feat .tech { display: inline-block; font-family: var(--mono); font-size: 0.7rem; color: var(--text-mute); border: 1px solid var(--line-warm); padding: 0.2rem 0.6rem; border-radius: 2px; margin-bottom: 1rem; letter-spacing: 0.04em; }
+.feat .witty { font-family: var(--serif); font-style: italic; font-size: 0.95rem; color: var(--gold-deep); border-top: 1px solid var(--line); padding-top: 1rem; }
+.feat.s4 { grid-column: span 4; }
+.feat.s3 { grid-column: span 3; }
+.feat.s2 { grid-column: span 2; }
+.feat.s6 { grid-column: span 6; }
+
+/* EXHIBIT */
+.exhibit { margin-top: 4rem; }
+.exhibit .label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 1rem; }
+.exhibit h3 { font-family: var(--serif); font-weight: 400; font-size: 1.85rem; line-height: 1.2; margin-bottom: 1.25rem; letter-spacing: -0.02em; }
+.exhibit .story { color: var(--text-soft); font-size: 1.0625rem; line-height: 1.65; margin-bottom: 2.5rem; max-width: 70ch; }
+.code-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.code-pair .col { background: var(--bg-inset); padding: 1.5rem; }
+.code-pair .col .tag { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 1rem; display: block; }
+.code-pair .before .tag { color: var(--text-mute); }
+.code-pair .after .tag { color: var(--gold-deep); }
+pre { font-family: var(--mono); font-size: 0.78rem; line-height: 1.7; color: var(--text-soft); background: transparent; white-space: pre; overflow-x: auto; }
+
+/* METRICS */
+.metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 4rem; border: 1px solid var(--line); background: var(--bg-elevated); }
+.metric { padding: 2.5rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); transition: background 250ms; }
+.metric:hover { background: var(--bg-inset); }
+.metric:nth-child(3n) { border-right: none; }
+.metric:nth-last-child(-n+3) { border-bottom: none; }
+.metric .lbl { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.28em; color: var(--text-mute); margin-bottom: 1.25rem; }
+.metric .val { font-family: var(--serif); font-weight: 400; font-size: 3.25rem; line-height: 1; color: var(--text); letter-spacing: -0.03em; }
+.metric .val .unit { font-size: 1.4rem; color: var(--gold-deep); margin-left: 0.3rem; font-style: italic; font-weight: 400; }
+.metric .desc { margin-top: 1.25rem; font-size: 0.92rem; color: var(--text-soft); line-height: 1.6; }
+
+/* DECISIONS */
+.decisions { margin-top: 3rem; }
+details.decision { border-top: 1px solid var(--line); padding: 2rem 0; }
+details.decision:last-of-type { border-bottom: 1px solid var(--line); }
+details.decision summary { cursor: pointer; list-style: none; display: grid; grid-template-columns: 60px 1fr auto; gap: 2rem; align-items: baseline; }
+details.decision summary::-webkit-details-marker { display: none; }
+details.decision .qnum { font-family: var(--mono); font-size: 0.85rem; color: var(--gold-deep); letter-spacing: 0.22em; }
+details.decision .q { font-family: var(--serif); font-weight: 400; font-size: 1.3rem; line-height: 1.3; color: var(--text); letter-spacing: -0.015em; }
+details.decision .arrow { font-family: var(--mono); font-size: 0.9rem; color: var(--text-mute); transition: transform 250ms; }
+details.decision[open] .arrow { transform: rotate(45deg); color: var(--gold-deep); }
+details.decision .body { margin-top: 1.5rem; padding-left: calc(60px + 2rem); display: flex; flex-direction: column; gap: 1.25rem; color: var(--text-soft); max-width: 75ch; }
+details.decision .short { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--gold-deep); line-height: 1.4; }
+details.decision .long { font-size: 1rem; line-height: 1.7; }
+
+/* TIMELINE */
+.timeline { margin-top: 4rem; }
+.phase { display: grid; grid-template-columns: 240px 1fr; gap: 3rem; padding: 3rem 0; border-top: 1px solid var(--line); align-items: start; }
+.phase:last-child { border-bottom: 1px solid var(--line); }
+.phase .meta { display: flex; flex-direction: column; gap: 0.75rem; }
+.phase .pnum { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.25em; color: var(--gold-deep); text-transform: uppercase; }
+.phase .ptitle { font-family: var(--serif); font-weight: 400; font-size: 1.25rem; line-height: 1.2; color: var(--text); letter-spacing: -0.015em; }
+.phase .mood { font-family: var(--mono); font-size: 0.72rem; color: var(--text-mute); letter-spacing: 0.2em; text-transform: uppercase; }
+.phase .story { color: var(--text-soft); font-size: 1.0625rem; line-height: 1.65; margin-bottom: 1rem; }
+.phase .story strong { color: var(--text); font-weight: 500; font-family: var(--serif); font-style: italic; }
+.phase .deliverable { font-family: var(--mono); font-size: 0.85rem; color: var(--gold-deep); border-left: 1px solid var(--gold); padding-left: 1rem; line-height: 1.5; }
+
+/* REFLECTION */
+.reflection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+.reflection-grid .block { padding-top: 1.5rem; border-top: 1px solid var(--gold); }
+.reflection-grid .label { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--gold-deep); margin-bottom: 1rem; }
+.reflection-grid h3 { font-family: var(--serif); font-weight: 400; font-size: 1.5rem; line-height: 1.2; color: var(--text); margin-bottom: 1rem; letter-spacing: -0.015em; }
+.reflection-grid p { color: var(--text-soft); font-size: 1rem; line-height: 1.65; }
+
+/* FOOTER */
+footer.recursive { padding: 10rem 0 6rem; border-top: 1px solid var(--line); position: relative; background: radial-gradient(ellipse 60% 80% at 50% 100%, var(--gold-soft) 0%, transparent 60%); }
+footer.recursive h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(2rem, 4.5vw, 3.5rem); line-height: 1.15; letter-spacing: -0.025em; max-width: 28ch; margin-bottom: 2rem; }
+footer.recursive .cta-line { color: var(--text-soft); font-size: 1.2rem; line-height: 1.55; margin-bottom: 3rem; max-width: 50ch; }
+footer.recursive .next { margin-top: 6rem; padding-top: 2rem; border-top: 1px solid var(--line); color: var(--text-mute); font-family: var(--mono); font-size: 0.85rem; letter-spacing: 0.05em; }
+
+.integrity { background: var(--bg-inset); padding: 3rem 2rem; font-family: var(--mono); font-size: 0.78rem; color: var(--text-mute); line-height: 1.7; border-top: 1px solid var(--line); }
+.integrity .row { max-width: 1100px; margin: 0 auto; }
+.integrity strong { color: var(--text); font-weight: 500; }
+.integrity em { color: var(--gold-deep); font-style: normal; }
+
+@media (max-width: 1000px) {
+  section { padding: 6rem 0; }
+  .hero { padding: 8rem 0 5rem; }
+  .dual, .algo-grid, .reflection-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .cards.c4, .cards.c5 { grid-template-columns: 1fr 1fr; }
+  .psr .step, .phase { grid-template-columns: 1fr; gap: 1.5rem; }
+  details.decision summary { grid-template-columns: 50px 1fr; }
+  details.decision .arrow { display: none; }
+  details.decision .body { padding-left: calc(50px + 2rem); }
+  .bento { grid-template-columns: 1fr; }
+  .feat.s4, .feat.s3, .feat.s2, .feat.s6 { grid-column: span 1; }
+  .code-pair { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: 1fr; }
+  .metric { border-right: none; }
+  .metric:not(:last-child) { border-bottom: 1px solid var(--line); }
+  .policy-table { font-size: 0.82rem; }
+  .policy-table th, .policy-table td { padding: 0.75rem 0.5rem; }
+}
+@media (max-width: 640px) { .cards.c4, .cards.c5 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="left">
+    <span class="name">EVERCLEAN</span>
+    <span style="color: var(--text-faint);">·</span>
+    <span>Portfolio piece 02 / 09</span>
+  </div>
+  <div class="right">
+    <span class="tag">v2.0-infrastructure</span>
+    <span>commit 7356d580</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eye reveal">01 · The Hook</div>
+    <h1 class="reveal d1">I built Everclean for the people who notice everything — <em>and the engineers who notice the details.</em></h1>
+    <p class="lede reveal d2">
+      Solo build of a luxury vertical: Next.js 14 + Prisma + NextAuth v5 + Stripe + Resend + Upstash Redis + Sentry, layered with a Quiet Luxury design system. V2.0 added subscriptions, 200 m GPS geofencing for staff time clocks, encrypted client preferences, and a notification queue — 6,852 insertions, 30 files, one tagged commit. Designed and tracked in the same knowledge graph rendering this portfolio piece.
+    </p>
+    <div class="reveal d3">
+      <a class="cta" href="#process">Read the process</a>
+      <a class="cta-ghost" href="#architecture">See the architecture</a>
+    </div>
+    <div class="meta reveal d4">
+      <div><span class="k">Role</span><span class="v">Solo · idea → V2.0</span></div>
+      <div><span class="k">Stack</span><span class="v">Next.js 14 · Prisma · Stripe</span></div>
+      <div><span class="k">Region</span><span class="v">Waterloo Region, Ontario</span></div>
+      <div><span class="k">Status</span><span class="v">V2.0 infra committed · UI pending</span></div>
+    </div>
+    <div class="dual">
+      <div class="card reveal" data-num="For the host">
+        <h3>Most cleaning marketplaces treat your home like a Uber ride.</h3>
+        <p>Fastest, cheapest, no memory of who you are. Everclean is the opposite — same staff each visit, your allergies and access codes saved (encrypted), a subscription model so the value compounds month over month. It's a service the way a good hotel concierge runs one.</p>
+      </div>
+      <div class="card reveal d1" data-num="For the engineer">
+        <h3>Vertical Next.js 14 platform, not a marketplace.</h3>
+        <p>Prisma 5.22 over PostgreSQL with role-based auth (NextAuth v5, four roles). Stripe Subscriptions API with tiered discounts. Upstash Redis pipeline for atomic rate limiting (5 distinct policies). Sentry across all three Next.js runtimes. 200 m geofence validation on staff GPS check-ins. Auto-generated bookings on subscription renewal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eye reveal">02 · The bet</div>
+    <h2 class="reveal d1 h2-intro">Why I picked this fight.</h2>
+    <p class="lede reveal d2">Four short answers to the four questions every project should answer before the first commit.</p>
+    <div class="cards c4">
+      <div class="card-block reveal">
+        <div class="label">Signal</div>
+        <h3>The middle was empty.</h3>
+        <p>Cleaning marketplaces compete on price; local boutiques compete on service but lose on convenience. The HNW segment is squeezed between commodity and friction. The middle is where the bet sits.</p>
+      </div>
+      <div class="card-block reveal d1">
+        <div class="label">Filter</div>
+        <h3>Vertical, subscription, premium, local-depth-first.</h3>
+        <p>Own the staff bench. Subscription tiers reward continuity. Local depth before geographic expansion (the playbook ports — same template + new staff bench).</p>
+      </div>
+      <div class="card-block reveal d2">
+        <div class="label">Why now</div>
+        <h3>The window is open and tightening.</h3>
+        <p>Suburban affluent regions are under-served by tech-native premium services. HNW now expects digital convenience but won't accept marketplace commoditization. Larger players will figure out the same gap eventually.</p>
+      </div>
+      <div class="card-block reveal d3">
+        <div class="label">Why me</div>
+        <h3>I have an alarm code I won't give a marketplace.</h3>
+        <p>The privacy-of-access-codes problem was personal before it was technical. I value the same person knowing my home. I built what I'd actually pay for.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eye reveal">03 · No-jargon explainer</div>
+    <h2 class="reveal d1 h2-intro">Problem. Solution. Result.</h2>
+    <div class="psr">
+      <div class="step reveal">
+        <div class="label">01 · Problem</div>
+        <div>
+          <h3>Marketplaces optimize for cheapest, not best.</h3>
+          <p>Existing apps are commodity races to the bottom: cheapest provider, shortest visit, no memory between bookings. Privacy is an afterthought; data sells; staff turnover is invisible to the client until something breaks. Luxury homeowners pay for continuity — and continuity is precisely what marketplaces structurally cannot offer.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="label">02 · Solution</div>
+        <div>
+          <h3>Build a vertical, not a marketplace.</h3>
+          <p>One brand, one staff bench, one client portal. Subscriptions instead of one-shot bookings. GPS-validated check-in/out so the schedule matches reality. Encrypted client preferences (alarm codes, lockbox combos, allergies) so the second visit is better than the first. Tier discounts that reward continuity. Quiet Luxury design language so the app <em style="color: var(--gold-deep); font-style: italic;">looks</em> like the service it promises.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="label">03 · Result</div>
+        <div>
+          <h3>V2.0 infrastructure committed and tagged.</h3>
+          <p>One tagged release: <code>v2.0-infrastructure</code>, commit <code>7356d580</code>. 30 files changed, 6,852 insertions, 883 deletions. 28 routes generated, TypeScript pass, ESLint pass, Prisma generate pass. Eight new Prisma models live (Subscription, TimeClock, ClientPreferences, GiftCard, Review, Referral, Notification, BookingHistory). WCAG AA accessibility carried forward from V1.1.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="eye reveal">04 · My process</div>
+    <h2 class="reveal d1 h2-intro">How I shipped this without a team.</h2>
+    <p class="lede reveal d2">Four habits, applied recursively. The same discipline that kept the platform feeling luxury kept the build cheap.</p>
+    <div class="cards c2">
+      <div class="card-block reveal">
+        <div class="label">01 · The editorial bar</div>
+        <h3>Would Aman Resorts ship this?</h3>
+        <p>If the feature would feel cheap to a luxury hotel guest, it gets cut. The bar is unforgiving — it eliminated the "progress badge that gamifies cleaning" idea, the "AI-powered smart suggestions" upsell, the dark patterns in the cancel flow. What survived is what would survive a concierge's handoff between staff. That's the design test.</p>
+      </div>
+      <div class="card-block reveal d1">
+        <div class="label">02 · Scoped agents per concern</div>
+        <h3>Design system, schema, auth+billing, infra — four sessions.</h3>
+        <p>Cross-cutting touch only at the boundaries: design tokens are JSON, the schema is Prisma, the auth contract is the NextAuth session type. Each agent reads the boundary doc, not the whole project. The infrastructure session never sees component-level UI; the design session never sees rate-limit code.</p>
+      </div>
+      <div class="card-block reveal d2">
+        <div class="label">03 · Knowledge graph as working memory</div>
+        <h3>The vault rendering this page is where Everclean was designed.</h3>
+        <p>The Subscription model, the TimeClock, the ClientPreferences — each was designed in a graph node first, then committed to <code style="font-family: var(--mono); font-size: 0.85rem; color: var(--gold-deep);">schema.prisma</code>. New session re-loads the relevant subgraph (e.g. just "subscriptions + Stripe webhooks") as prefix context.</p>
+      </div>
+      <div class="card-block reveal d3">
+        <div class="label">04 · Token efficiency as a value</div>
+        <h3>Tokens are the schema.</h3>
+        <p>Design tokens (<code style="font-family: var(--mono); font-size: 0.85rem;">brand.primary.500</code>, etc.) reused across 28 routes — referencing them by name is dramatically cheaper than re-prompting. Same for schema: Prisma types flow through Zod flow through React Hook Form — one source, three consumers, no re-explanation.</p>
+      </div>
+    </div>
+    <div class="process-meta reveal">
+      <div class="label">▸ The recursive proof</div>
+      <p>This portfolio piece was generated by the same harness pipeline at <code>app/harness/</code> that ingests projects: <strong style="color: var(--gold-deep); font-style: normal;">Ingest → Analysis → Portfolio Writer → Validator</strong>. The vault at <code>vault/</code> graphs every design decision and dependency. Same orchestration pattern that built Everclean is now extracting it. <em style="color: var(--gold-deep); font-style: italic;">That's the demo.</em></p>
+    </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="wrap">
+    <div class="eye reveal">05 · Architecture</div>
+    <h2 class="reveal d1 h2-intro">Five layers. Fewer surfaces than the Stripe dashboard.</h2>
+    <p class="lede reveal d2">Edge auth and rate limiting on the way in. Three service classes own the business logic. Prisma is the only thing that talks to Postgres. Sentry watches all three runtimes.</p>
+    <div class="viz reveal">
+      <div class="viz-cap">▸ Stack diagram · request flows top-to-bottom · external services on the right</div>
+      <svg class="viz-svg arch-svg" viewBox="0 0 1100 580" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#B5952F"/>
+          </marker>
+        </defs>
+        <text class="col-title" x="380" y="30" text-anchor="middle">REQUEST FLOW</text>
+        <text class="col-sub" x="380" y="48" text-anchor="middle">CLIENT → EDGE → API → SERVICE → DATA</text>
+        <text class="col-title" x="900" y="30" text-anchor="middle">EXTERNAL</text>
+        <text class="col-sub" x="900" y="48" text-anchor="middle">3RD-PARTY SERVICES</text>
+        <g transform="translate(140, 70)">
+          <rect class="rect accent" width="480" height="60" rx="2"/>
+          <text class="layer-num" x="20" y="22">L1</text>
+          <text class="layer-name" x="60" y="22">Edge · Auth · Rate Limit</text>
+          <text class="layer-detail" x="20" y="42">middleware.ts · NextAuth v5 · @upstash/ratelimit (5 policies)</text>
+        </g>
+        <g transform="translate(140, 160)">
+          <rect class="rect" width="480" height="60" rx="2"/>
+          <text class="layer-num" x="20" y="22">L2</text>
+          <text class="layer-name" x="60" y="22">API · App Router</text>
+          <text class="layer-detail" x="20" y="42">~28 routes · Zod validation · Server Components · webhooks</text>
+        </g>
+        <g transform="translate(140, 250)">
+          <rect class="rect accent" width="480" height="80" rx="2"/>
+          <text class="layer-num" x="20" y="22">L3</text>
+          <text class="layer-name" x="60" y="22">Service Layer</text>
+          <text class="layer-detail" x="20" y="42">SubscriptionService · StaffService · BookingService</text>
+          <text class="layer-detail" x="20" y="58">Tier discounts · Geofence math · Cache · 24h refund logic</text>
+        </g>
+        <g transform="translate(140, 360)">
+          <rect class="rect" width="480" height="80" rx="2"/>
+          <text class="layer-num" x="20" y="22">L4</text>
+          <text class="layer-name" x="60" y="22">Data · Prisma over PostgreSQL</text>
+          <text class="layer-detail" x="20" y="42">8 V2.0 models · 4 user roles · 5 booking states</text>
+          <text class="layer-detail" x="20" y="58">Encrypted access codes · 30-day photo retention (GDPR)</text>
+        </g>
+        <g transform="translate(140, 470)">
+          <rect class="rect" width="480" height="60" rx="2"/>
+          <text class="layer-num" x="20" y="22">L5</text>
+          <text class="layer-name" x="60" y="22">Build &amp; Deploy</text>
+          <text class="layer-detail" x="20" y="42">Vercel · Docker · 28 routes · TS/ESLint/Prisma all pass</text>
+        </g>
+        <path class="arrow" d="M 380 130 L 380 160"/>
+        <path class="arrow" d="M 380 220 L 380 250"/>
+        <path class="arrow" d="M 380 330 L 380 360"/>
+        <path class="arrow" d="M 380 440 L 380 470"/>
+        <g transform="translate(740, 75)">
+          <rect class="side-pill" width="280" height="48" rx="4"/>
+          <text class="side-name" x="20" y="20">UPSTASH REDIS</text>
+          <text class="side-tag" x="20" y="36">rate limit · cache · failure tracking</text>
+        </g>
+        <g transform="translate(740, 140)">
+          <rect class="side-pill" width="280" height="48" rx="4"/>
+          <text class="side-name" x="20" y="20">STRIPE</text>
+          <text class="side-tag" x="20" y="36">subscriptions · payments · webhooks</text>
+        </g>
+        <g transform="translate(740, 205)">
+          <rect class="side-pill" width="280" height="48" rx="4"/>
+          <text class="side-name" x="20" y="20">RESEND</text>
+          <text class="side-tag" x="20" y="36">transactional email · gift cards</text>
+        </g>
+        <g transform="translate(740, 270)">
+          <rect class="side-pill" width="280" height="48" rx="4"/>
+          <text class="side-name" x="20" y="20">SENTRY · 3 RUNTIMES</text>
+          <text class="side-tag" x="20" y="36">client + server + edge · session replay</text>
+        </g>
+        <g transform="translate(740, 335)">
+          <rect class="side-pill" width="280" height="48" rx="4"/>
+          <text class="side-name" x="20" y="20">POSTGRESQL</text>
+          <text class="side-tag" x="20" y="36">via Prisma 5.22 · parameterized queries</text>
+        </g>
+        <g transform="translate(740, 400)">
+          <rect class="side-pill" width="280" height="48" rx="4"/>
+          <text class="side-name" x="20" y="20">VERCEL</text>
+          <text class="side-tag" x="20" y="36">edge runtime · env vars · source maps</text>
+        </g>
+        <path class="arrow" d="M 620 100 L 740 100"/>
+        <path class="arrow" d="M 620 190 L 740 165"/>
+        <path class="arrow" d="M 620 290 L 740 230"/>
+        <path class="arrow" d="M 620 290 L 740 295"/>
+        <path class="arrow" d="M 620 400 L 740 360"/>
+        <path class="arrow" d="M 620 500 L 740 425"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eye reveal">06 · Stakeholder lens</div>
+    <h2 class="reveal d1 h2-intro">Five perspectives I held at the same time.</h2>
+    <p class="lede reveal d2">A solo builder is also their own product manager, business person, ops lead, legal scout, and growth marketer. Each lens left fingerprints on the design.</p>
+    <div class="cards c5">
+      <div class="card-block reveal">
+        <div class="label">Customer (HNW)</div>
+        <p>I want the same person knowing my house. I won't give my alarm code to a marketplace. I'll pay 30% above market if I never have to re-explain the dog, the espresso machine, the orchids. Continuity is the feature; everything else is the price.</p>
+      </div>
+      <div class="card-block reveal d1">
+        <div class="label">Business</div>
+        <p>LTV math: 1 client × 12 mo × $2,400 avg = $28,800/yr lifetime. 50 clients = $1.4M ARR; 200 = $5.7M. Tier discounts (15/10/5%) trade margin for retention. Cost-of-goods is the staff bench, not the platform.</p>
+      </div>
+      <div class="card-block reveal d2">
+        <div class="label">Operations</div>
+        <p>GPS check-in validates labor-cost claims. The 200 m geofence is liability protection — if the cleaner wasn't on-site when the property was damaged, the audit trail says so. Staff substitution requires client pre-approval — retention dressed as policy.</p>
+      </div>
+      <div class="card-block reveal d3">
+        <div class="label">Legal &amp; Privacy</div>
+        <p>GDPR + privacy of <em style="color: var(--gold-deep); font-style: italic;">homes</em>. Alarm codes, lockbox combos, smart-lock instructions encrypted at rest, decrypted only for assigned staff on an active booking. Photos auto-delete at 30 days, GPS at 90.</p>
+      </div>
+      <div class="card-block reveal d4">
+        <div class="label">Growth</div>
+        <p>$100 referral reward (subsidized from LTV math). Gift cards as gateway purchase — recipient becomes a subscription candidate. Regional expansion playbook: each city is the same template + a new staff bench.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eye reveal">07 · What it does</div>
+    <h2 class="reveal d1 h2-intro">Seven features. Continuity-shaped.</h2>
+    <div class="bento reveal">
+      <div class="feat s4">
+        <div class="num">01 · BILLING</div>
+        <h3>Subscription billing with continuity discounts.</h3>
+        <p>Stripe Subscriptions with three tiers — weekly 15%, biweekly 10%, monthly 5%. Pause / resume / cancel from the client portal. Auto-generates bookings for active subscriptions on each renewal cycle.</p>
+        <span class="tech">Stripe Subscriptions · webhooks</span>
+        <p class="witty">The longer you stay, the less you pay. The opposite of every gym membership.</p>
+      </div>
+      <div class="feat s2">
+        <div class="num">02 · GEOFENCE</div>
+        <h3>200 m staff GPS check-in.</h3>
+        <p>Haversine distance check rejects check-ins beyond 200 m. Failure tracking with Redis-backed lockout.</p>
+        <span class="tech">Haversine · Upstash</span>
+        <p class="witty">Just being the kind of service that knows when it actually arrived.</p>
+      </div>
+      <div class="feat s2">
+        <div class="num">03 · MEMORY</div>
+        <h3>Encrypted client preferences.</h3>
+        <p>Allergies, alarm codes, lockbox combos, smart-lock instructions, parking quirks — encrypted at rest, redacted for unassigned staff.</p>
+        <span class="tech">Encryption at rest</span>
+        <p class="witty">The second visit should know what the first one learned.</p>
+      </div>
+      <div class="feat s2">
+        <div class="num">04 · LIMITS</div>
+        <h3>Five-tier rate limiting.</h3>
+        <p>General · Strict · Auth · Booking · Admin. Atomic Redis pipelines, graceful degradation when Redis is unreachable.</p>
+        <span class="tech">@upstash/ratelimit</span>
+        <p class="witty">Bots get to count to five. Admins to two hundred.</p>
+      </div>
+      <div class="feat s2">
+        <div class="num">05 · NOTIFY</div>
+        <h3>Multi-channel notification queue.</h3>
+        <p>Email (Resend), SMS (planned), push for staff. Per-user preferences, central template management.</p>
+        <span class="tech">Resend · queue</span>
+        <p class="witty">Your inbox knows what your dishwasher is doing.</p>
+      </div>
+      <div class="feat s2">
+        <div class="num">06 · GIFTS</div>
+        <h3>Gift cards — physical + digital.</h3>
+        <p>Digital delivery (Resend email) and physical fulfillment with tracking. Doubles as a low-friction acquisition channel.</p>
+        <span class="tech">Stripe + Resend</span>
+        <p class="witty">A present that doesn't end up in a regift drawer.</p>
+      </div>
+      <div class="feat s4">
+        <div class="num">07 · ROLES</div>
+        <h3>Role-based access for four user roles.</h3>
+        <p>UserRole enum: CUSTOMER · ADMIN · MANAGER · STAFF. Route groups in the App Router map to roles. NextAuth v5 session-typed end-to-end so <code>auth.user.role</code> is type-safe everywhere.</p>
+        <span class="tech">NextAuth v5 · 4 roles</span>
+        <p class="witty">The cleaner doesn't see the admin dashboard. The admin doesn't see the lockbox combos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eye reveal">08 · Engineering proof</div>
+    <h2 class="reveal d1 h2-intro">One artefact. One editorial decision.</h2>
+    <p class="lede reveal d2">Including this exhibit because the interesting part isn't the syntax — it's the editorial decision that "fail open + log loudly" beats "fail closed + lose the lead" for a luxury brand. Different category, different choice.</p>
+    <div class="exhibit reveal">
+      <div class="label">EXHIBIT · DECISION · FAIL OPEN, LOG LOUDLY</div>
+      <h3>When Redis goes down, the contact form should still work.</h3>
+      <p class="story">Rate limits exist to protect the system, not to brick the contact form on the day Upstash has an outage. V2.0's rate-limiter wraps every Redis call in a try/catch — when the pipeline fails, the limiter returns <code>success: true, degraded: true</code> and Sentry records the incident. Better to admit one extra request than to lose a customer because we got loud about being safe.</p>
+      <div class="code-pair">
+        <div class="col before">
+          <span class="tag">V1.1 · in-memory</span>
+<pre>const hits = new Map&lt;string, number&gt;();
+export function rateLimit(key: string) {
+  const n = (hits.get(key) ?? 0) + 1;
+  hits.set(key, n);
+  return n &lt;= 100;
+  // resets on every redeploy.
+  // useless on Vercel.
+}</pre>
+        </div>
+        <div class="col after">
+          <span class="tag">V2.0 · graceful degradation</span>
+<pre>import { Ratelimit } from
+  '@upstash/ratelimit';
+import { redis } from '@/lib/redis';
+import { captureException } from
+  '@sentry/nextjs';
+
+export const rateLimits = {
+  general: new Ratelimit({ redis,
+    limiter: Ratelimit.slidingWindow(100, '1 m') }),
+  strict:  new Ratelimit({ redis,
+    limiter: Ratelimit.slidingWindow(20,  '1 m') }),
+  auth:    new Ratelimit({ redis,
+    limiter: Ratelimit.slidingWindow(5,   '15 m') }),
+  booking: new Ratelimit({ redis,
+    limiter: Ratelimit.slidingWindow(5,   '1 m') }),
+  admin:   new Ratelimit({ redis,
+    limiter: Ratelimit.slidingWindow(200, '1 m') }),
+};
+
+export async function check(
+  policy: keyof typeof rateLimits,
+  key: string,
+) {
+  try {
+    return await rateLimits[policy].limit(key);
+  } catch (err) {
+    // fail open. log loudly.
+    captureException(err, {
+      tags: { policy, key },
+      level: 'warning',
+    });
+    return { success: true, degraded: true };
+  }
+}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eye reveal">09 · Deep dive</div>
+    <h2 class="reveal d1 h2-intro">The 200 metre rule, visualised.</h2>
+    <p class="lede reveal d2">A check-in inside the gold ring records. A check-in outside is rejected and counted toward a failure-tracking lockout.</p>
+    <div class="algo-grid">
+      <div class="reveal">
+        <h3 style="font-family: var(--serif); font-weight: 400; font-size: 1.4rem; margin-bottom: 1rem; color: var(--text); letter-spacing: -0.015em;">The math</h3>
+        <p style="color: var(--text-soft); margin-bottom: 0.5rem;">Haversine on the sphere — closed-form, one division, no iterative solve. Earth radius treated as 6,371 km. Within ~0.5% accuracy at the city scale.</p>
+        <div class="math">
+          <span class="c">// great-circle distance between two lat/lng points</span><br>
+          <span class="o">a</span> = sin²(<span class="v">Δφ</span>/2) + cos(<span class="v">φ₁</span>)·cos(<span class="v">φ₂</span>)·sin²(<span class="v">Δλ</span>/2)<br>
+          <span class="o">d</span> = 2·R·asin(√<span class="o">a</span>)<br><br>
+          <span class="c">// rule: reject if d &gt; 200 m</span><br>
+          <span class="o">accepted</span> = <span class="o">d</span> ≤ <span class="v">GEOFENCE_M</span>
+        </div>
+        <table class="policy-table" style="margin-top: 2.5rem;">
+          <thead>
+            <tr><th>Sample</th><th>Distance</th><th>Outcome</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="policy">A</td><td class="value">42 m</td><td class="note">accepted · check-in recorded</td></tr>
+            <tr><td class="policy">B</td><td class="value">187 m</td><td class="note">accepted · within tolerance</td></tr>
+            <tr><td class="policy">C</td><td class="value">312 m</td><td class="note">rejected · OUTSIDE_GEOFENCE</td></tr>
+            <tr><td class="policy">D</td><td class="value">1.4 km</td><td class="note">rejected · failure counter +1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="reveal d1">
+        <svg class="viz-svg geo-svg" viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg">
+          <text class="label-mute" x="240" y="15" text-anchor="middle">N</text>
+          <text class="label-mute" x="465" y="245">E</text>
+          <text class="label-mute" x="240" y="475" text-anchor="middle">S</text>
+          <text class="label-mute" x="15" y="245">W</text>
+          <line x1="240" y1="20" x2="240" y2="460" class="axis"/>
+          <line x1="20" y1="240" x2="460" y2="240" class="axis"/>
+          <circle cx="240" cy="240" r="160" class="ring-inner"/>
+          <circle cx="240" cy="240" r="160" class="ring-outer"/>
+          <circle cx="240" cy="240" r="6" class="property"/>
+          <text class="label" x="252" y="245">PROPERTY</text>
+          <text class="label-mute" x="252" y="258">43.4643°N · 80.5204°W</text>
+          <text class="label-mute" x="280" y="118" transform="rotate(-30, 280, 118)">200 m</text>
+          <circle cx="180" cy="200" r="4" class="staff-ok"/>
+          <text class="ok" x="155" y="195" text-anchor="end">A · 42 m ✓</text>
+          <circle cx="320" cy="320" r="4" class="staff-ok"/>
+          <text class="ok" x="345" y="325">B · 187 m ✓</text>
+          <circle cx="380" cy="120" r="4" class="staff-fail"/>
+          <text class="fail" x="395" y="115">C · 312 m ✗</text>
+          <circle cx="80" cy="400" r="4" class="staff-fail"/>
+          <text class="fail" x="95" y="405">D · 1.4 km ✗</text>
+          <g transform="translate(20, 440)">
+            <circle cx="6" cy="0" r="4" class="staff-ok"/>
+            <text class="label-mute" x="18" y="4">accepted</text>
+            <circle cx="120" cy="0" r="4" class="staff-fail"/>
+            <text class="label-mute" x="132" y="4">rejected</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <h3 class="reveal" style="font-family: var(--serif); font-weight: 400; font-size: 1.4rem; margin-top: 5rem; margin-bottom: 1rem; color: var(--text); letter-spacing: -0.015em;">Five rate-limit policies, all named.</h3>
+    <p class="reveal d1" style="color: var(--text-soft); margin-bottom: 0; font-size: 1.05rem;">Each route is decorated with the policy it enforces. No magic numbers in handlers.</p>
+    <table class="policy-table reveal">
+      <thead>
+        <tr><th>Policy</th><th>Window</th><th>Max</th><th>Applied to</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="policy">general</td><td class="value">1 min</td><td class="value">100</td><td class="note">Public marketing API, light reads</td></tr>
+        <tr><td class="policy">strict</td><td class="value">1 min</td><td class="value">20</td><td class="note">Contact form, sensitive write paths</td></tr>
+        <tr><td class="policy">auth</td><td class="value">15 min</td><td class="value">5</td><td class="note">Login, password reset · brute-force defence</td></tr>
+        <tr><td class="policy">booking</td><td class="value">1 min</td><td class="value">5</td><td class="note">Booking creation · prevents accidental dupes</td></tr>
+        <tr><td class="policy">admin</td><td class="value">1 min</td><td class="value">200</td><td class="note">Admin dashboard reads · higher ceiling</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout reveal">
+      <div class="label">▸ Why graceful degradation matters</div>
+      <p>Rate limits exist to protect the system, not to brick the contact form on the day Upstash has an outage. Better to admit one extra request than to lose a customer because we got loud about being safe.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eye reveal">10 · Numbers</div>
+    <h2 class="reveal d1 h2-intro">What's measurable. And what got measured.</h2>
+    <div class="metrics-grid reveal">
+      <div class="metric">
+        <div class="lbl">Routes generated</div>
+        <div class="val">28</div>
+        <div class="desc">Including all V2.0 API endpoints. Build status: PASS.</div>
+      </div>
+      <div class="metric">
+        <div class="lbl">V2.0 commit size</div>
+        <div class="val">6,852<span class="unit">+ ins</span></div>
+        <div class="desc">Single tagged commit <code>v2.0-infrastructure</code>. 30 files changed, 6,852 insertions, 883 deletions.</div>
+      </div>
+      <div class="metric">
+        <div class="lbl">Prisma models added</div>
+        <div class="val">8<span class="unit">new</span></div>
+        <div class="desc">Subscription · TimeClock · ClientPreferences · GiftCard · Review · Referral · Notification · BookingHistory.</div>
+      </div>
+      <div class="metric">
+        <div class="lbl">Rate-limit policies</div>
+        <div class="val">5<span class="unit">named</span></div>
+        <div class="desc">general · strict · auth · booking · admin. Atomic Redis pipelines, graceful degradation.</div>
+      </div>
+      <div class="metric">
+        <div class="lbl">Geofence radius</div>
+        <div class="val">200<span class="unit">m</span></div>
+        <div class="desc">Staff check-in must be within 200 m. Haversine validation, failure tracking, lockout.</div>
+      </div>
+      <div class="metric">
+        <div class="lbl">ARR at 50 clients</div>
+        <div class="val">$1.4<span class="unit">M projected</span></div>
+        <div class="desc">1 × 12 × $2,400 = $28,800/yr/client. Projection from LTV math, not measured revenue.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eye reveal">11 · Decisions</div>
+    <h2 class="reveal d1 h2-intro">Five questions worth answering.</h2>
+    <p class="lede reveal d2">Strategic first, technical last. The technical decisions are downstream of the strategic ones.</p>
+    <div class="decisions">
+      <details class="decision reveal" open>
+        <summary>
+          <div class="qnum">01</div>
+          <div class="q">Why this market — and why Waterloo Region specifically?</div>
+          <div class="arrow">+</div>
+        </summary>
+        <div class="body">
+          <div class="short">HNW homeowners in suburban affluent regions are under-served by tech-native premium services.</div>
+          <div class="long">The HNW segment is squeezed between marketplace commoditization (TaskRabbit, Handy, Tidy) and premium-but-friction local boutiques. Waterloo Region was the right starting point because it's affluent enough to support the price point ($2,400 avg/year), small enough to dominate, and adjacent to a tech ecosystem primed for digital convenience. The playbook ports — each city is the same template plus a new staff bench. The platform is the moat.</div>
+        </div>
+      </details>
+      <details class="decision reveal">
+        <summary>
+          <div class="qnum">02</div>
+          <div class="q">Why a vertical platform instead of a marketplace?</div>
+          <div class="arrow">+</div>
+        </summary>
+        <div class="body">
+          <div class="short">Continuity. Marketplaces optimize for cheapest provider; luxury optimizes for the same person on the second visit.</div>
+          <div class="long">A marketplace would be cheaper to build and easier to scale, but it would solve a different problem. Luxury homeowners pay for memory: the staff who knows the alarm code, the espresso machine, the dog's name. Encoding that requires owning the staff bench, the schedule, and the client preferences as one connected system.</div>
+        </div>
+      </details>
+      <details class="decision reveal">
+        <summary>
+          <div class="qnum">03</div>
+          <div class="q">Why subscriptions instead of one-shot bookings?</div>
+          <div class="arrow">+</div>
+        </summary>
+        <div class="body">
+          <div class="short">The relationship needs a shape. Tier discounts trade margin for retention. LTV math justifies it.</div>
+          <div class="long">One-shot bookings are a marketplace mechanic. The continuity bet requires a recurring relationship — and a subscription with continuity-rewarding discount tiers is the simplest way to encode that. The LTV math works: a 15% weekly discount paid against a 12-month retention at $2,400/yr is a profitable trade.</div>
+        </div>
+      </details>
+      <details class="decision reveal">
+        <summary>
+          <div class="qnum">04</div>
+          <div class="q">Why audit-grade infrastructure in V2.0 before scaling clients?</div>
+          <div class="arrow">+</div>
+        </summary>
+        <div class="body">
+          <div class="short">The category is luxury. The first incident in front of a client is also the last client.</div>
+          <div class="long">A Stripe webhook that drops a <code>customer.subscription.deleted</code> event and silently re-bills the client is a credibility event, not a bug. A staff time-clock that doesn't validate GPS is a liability event. Sentry across three runtimes catches what intuition won't. Upstash rate-limits + graceful degradation keep the contact form working on Upstash's bad days.</div>
+        </div>
+      </details>
+      <details class="decision reveal">
+        <summary>
+          <div class="qnum">05</div>
+          <div class="q">Why NextAuth v5 (beta) instead of waiting for stable?</div>
+          <div class="arrow">+</div>
+        </summary>
+        <div class="body">
+          <div class="short">App Router support, Edge runtime support, type-safe session — the v4-to-v5 gap was wider than the beta-stability gap.</div>
+          <div class="long">NextAuth v4 predates the App Router and middleware-based auth. V5's <code>auth()</code> helper works in Server Components, route handlers, and middleware uniformly. The session is typed end-to-end so <code>auth.user.role</code> is <code>'CUSTOMER' | 'ADMIN' | 'MANAGER' | 'STAFF'</code> everywhere.</div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eye reveal">12 · Journey</div>
+    <h2 class="reveal d1 h2-intro">Three phases, with what each one taught me.</h2>
+    <div class="timeline">
+      <div class="phase reveal">
+        <div class="meta">
+          <div class="pnum">PHASE 01</div>
+          <div class="ptitle">V1.1 — booking platform (foundation)</div>
+          <div class="mood">METHODICAL</div>
+        </div>
+        <div>
+          <p class="story">First milestone: a working luxury booking website with Next.js 14 App Router, the Quiet Luxury design system, a 5-step booking wizard with real-time price calculation, Stripe Payment Intents, NextAuth, Prisma, and WCAG AA accessibility from day one. <strong>What I learned:</strong> the design system has to be locked before the second screen, or every component fights it. Tokens-first is non-negotiable.</p>
+          <p class="deliverable">V1.1 live · 5-step booking flow · Stripe Payments · WCAG AA · client + admin portals</p>
+        </div>
+      </div>
+      <div class="phase reveal">
+        <div class="meta">
+          <div class="pnum">PHASE 02</div>
+          <div class="ptitle">V2.0 — infrastructure upgrade</div>
+          <div class="mood">SURGICAL</div>
+        </div>
+        <div>
+          <p class="story">One tagged release. Eight new Prisma models. Stripe Subscriptions API. GPS-validated TimeClock. Five-policy Upstash Redis rate limiter. Sentry across three runtimes. Multi-channel notification queue. Gift cards. Referrals. Audit-trail BookingHistory. Build green. <strong>What I learned:</strong> infrastructure work compounds. The first 'fail open + log loudly' decision in the rate limiter became the template for every other graceful-degradation choice in the codebase.</p>
+          <p class="deliverable">Tag v2.0-infrastructure · 30 files · +6,852 / −883 · 28 routes · 5 services</p>
+        </div>
+      </div>
+      <div class="phase reveal">
+        <div class="meta">
+          <div class="pnum">PHASE 03</div>
+          <div class="ptitle">V2.0-complete — pending</div>
+          <div class="mood">PRAGMATIC</div>
+        </div>
+        <div>
+          <p class="story">Next: Staff Mobile PWA (offline support, GPS check-in UI, push notifications), real-time admin dashboard, gift card purchase flow with email delivery, notification preferences UI, subscription management UI, review submission and moderation, referral code sharing. <strong>What I'm watching for:</strong> the V1.1 → V2.0 jump was 6,852 insertions; V2.0 → V2.0-complete should be smaller. If it isn't, scope is creeping.</p>
+          <p class="deliverable">(pending) V2.0-complete · Staff PWA · realtime dashboard · gift purchase flow</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eye reveal">13 · Reflection</div>
+    <h2 class="reveal d1 h2-intro">What surprised me. What I'd change. What's next.</h2>
+    <div class="reflection-grid">
+      <div class="block reveal">
+        <div class="label">What surprised me</div>
+        <h3>The schema grew bigger than the visible product.</h3>
+        <p>Eight new models in V2.0 is bigger than the original V1.1 schema. The continuity bet (subscriptions, GPS, gifts, referrals, notifications) is structurally larger than the booking surface that visibly carries it. The visible product is the tip; the schema is the iceberg.</p>
+      </div>
+      <div class="block reveal d1">
+        <div class="label">What I'd do differently</div>
+        <h3>Validate the LTV math before building the tier system.</h3>
+        <p>Ship V1.1 to 5 real clients before building the V2.0 infrastructure. Validate the LTV math against real bookings before building the tier-discount system that depends on it. The infrastructure was correct; the order would have de-risked it.</p>
+      </div>
+      <div class="block reveal d2">
+        <div class="label">What's next</div>
+        <h3>UI for what V2.0 plumbed. Then the second city.</h3>
+        <p>V2.0-complete user-facing UI. Maybe pricing-tier optimization once real LTV data exists. Regional expansion playbook documented — the second city is the proof; the third is the pattern.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="recursive">
+  <div class="wrap">
+    <div class="eye reveal">14 · Wrap</div>
+    <h2 class="reveal d1">Everclean is what cleaning software looks like when you assume the client cares about the second visit, not just the first.</h2>
+    <p class="cta-line reveal d2">Continuity is the feature. Encryption is the trust. Tier discounts that reward staying are the receipt.</p>
+    <div class="reveal d3">
+      <a class="cta" href="#architecture">View the architecture</a>
+    </div>
+    <p class="next reveal d4">↓ NEXT IN THE PORTFOLIO · A TOUR OF EVERLAUNCHER</p>
+  </div>
+</footer>
+
+<div class="integrity">
+  <div class="row">
+    <strong>Honesty notes</strong> — All build numbers and the commit hash quoted verbatim from <code>V2.0_PROGRESS.md</code>. <em>Color discrepancy in source:</em> README.md lists Navy <code>#1A202C</code> / Gold <code>#C9A962</code>; <code>DESIGN_SYSTEM.md</code> (the dedicated 617-line design-token spec) lists Navy <code>#0A1929</code> / Gold <code>#D4AF37</code>. This preview uses DESIGN_SYSTEM.md as canonical. ARR projections ($1.4M at 50 clients, $5.7M at 200 clients) are explicit illustrative math from the LTV calculation $2,400/yr × clients × 12 — not measured revenue. V2.0 user-facing surfaces (Staff PWA, real-time admin dashboard, gift purchase flow) listed as <em>PENDING</em> per source. Reframe pass 2026-05-08 — content reweighted from engineering-first to thinking-first per user direction. Sections added: The Bet · My Process · Stakeholder Lens · Reflection.
+  </div>
+</div>
+
+<script>
+(function () {
+  const targets = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  targets.forEach(el => io.observe(el));
+})();
+</script>
+
+</body>
+</html>
